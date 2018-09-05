@@ -10,6 +10,7 @@ The sources of the news articles
 ## Dataset
 Dataset used to analyze clickbait articles and train the classifier
 
+<<<<<<< HEAD
 
 Article JSON format:
 ```json
@@ -24,6 +25,20 @@ Article JSON format:
 	"content" : "<content>"
 }
 ```
+=======
+### JSON format
+Article JSON format:<br />
+{<br />
+	"id" : "<id>",<br />
+	"name": "<headline>",<br />
+	"url" : "<url>",<br />
+	"timestamp" : "<date time of publication>",<br />
+	"description" : "<description>",<br />
+	"keywords" : "<keywords>",<br />
+	"summary" : "<summary>",<br />
+	"content" : "<content>"<br />
+}<br />
+>>>>>>> d26d350857d65ad15815d39f8d24d2e329948c40
 Except id, all these fields can be extracted with the newspaper library given the url.
 
 ## Analysis
