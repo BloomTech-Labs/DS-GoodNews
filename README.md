@@ -21,7 +21,8 @@ Article JSON format:
 	"description" : "<description>",
 	"keywords" : "<keywords>",
 	"summary" : "<summary>",
-	"content" : "<content>"
+	"content" : "<content>",
+	"clickbait" : "<binary_classification>"
 }
 ```
 Except id, all these fields can be extracted with the newspaper library given the url.
