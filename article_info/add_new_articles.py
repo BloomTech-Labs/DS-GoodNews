@@ -1,0 +1,2 @@
+import data_scraping_helper_functions
+data_scraping_helper_functions.update_files()
