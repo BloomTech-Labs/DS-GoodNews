@@ -1,6 +1,11 @@
 import feedparser
+from collections import OrderedDict
+import database as db
+import json
+import datetime
+
 def update():
-    update_files()
+    return update_files()
 
 def update_feeds(list_of_RSS_feeds):
     """ takes a list RSS feeds, a list containing article urls from the feeds, and a list containing
@@ -33,13 +38,13 @@ def newspaperize(article_url):
         article.download()
     except ArticleException:
         print("Failed to download url:", article_url)
-        return None
+        return None, None, None
 
     try:
         article.parse()
     except:
         print("Failed to parse url:", article_url)
-        return None
+        return None, None, None
 
 
     headline = article.title
@@ -53,29 +58,52 @@ def newspaperize(article_url):
     
     # timestamp can be None
    
-    article_information = {"id" : id_number,
-                  "name": headline,
-                  "url" : article_url,
-                  "timestamp" : timestamp.isoformat() if timestamp is not None else "",
-                  "description" : description,
-                  "keywords" : keywords,
-                  "summary" : summary,
-                  "content" : content,
-                  "clickbait" : None}
-    
-    return article_information
+    # article_information = {"id" : id_number,
+    #               "name": headline,
+    #               "url" : article_url,
+    #               "timestamp" : timestamp.isoformat() if timestamp is not None else "",
+    #               "description" : description,
+    #               "keywords" : keywords,
+    #               "summary" : summary,
+    #               "content" : content,
+    #               "clickbait" : None}
+    article_information = OrderedDict([
+                  ("id" , id_number),
+                  ("name", headline),
+                  ("url" , article_url),
+                  ("timestamp" , timestamp.isoformat() if timestamp is not None else ""),
+                  ("description" , description),
+                  ("keywords" , keywords),
+                  ("summary" , summary),
+                  ("content" , content),
+                  ("clickbait" , 0),
+                  ("createtime" , str(datetime.datetime.now()))
+    ])
+
+
+    article_list = list(article_information.values())
+    article_list[5] = ','.join(keywords)
+    keyword_list = []
+    for word in keywords:
+        keyword_list.append( [article_information["id"], word])
+    return article_information, article_list, keyword_list
 
 
 
 import jsonlines
 
 def newspaperize_new_articles_from_feed(new_article_urls):
+
     new_article_jsons = []
+    new_article_list = []
+    new_article_keywords_lists = []
     for article_url in new_article_urls:
-        article_json = newspaperize(article_url)
-        if article_json:
+        article_json, article_list, keyword_list = newspaperize(article_url)
+        if article_json is not None:
             new_article_jsons.append(article_json)
-    return new_article_jsons
+            new_article_list.append(article_list)
+            new_article_keywords_lists += keyword_list
+    return new_article_jsons, new_article_list, new_article_keywords_lists
 
 def update_files():
     
@@ -88,15 +116,23 @@ def update_files():
 
     new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
-    new_article_jsons = newspaperize_new_articles_from_feed(new_article_urls)
-   
+    new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
+
+    # write to database
+    conn = db.connect()
+    db.insert(conn, new_article_list,new_article_keywords_lists)
+
     with open('extracted_article_urls.txt', 'a') as f:
         for url in new_article_urls:
             f.write(url + '\n')
-    
+
+    # output to jsonlines
     with jsonlines.open('articles.jsonl', mode = 'a') as f:
         for article_json in new_article_jsons: 
             f.write(article_json)
+
+    return json.dumps(new_article_jsons)
+
 
 
 
