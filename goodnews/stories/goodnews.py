@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 import stories as st
+import database as db
+
 
 app = Flask(__name__)
 
@@ -9,8 +11,6 @@ def goodnews():
     return 'Good News!'
 
 @app.route('/stories/')
-def stories():    
-    st.update() 
-    with open('articles.jsonl') as f:
-        read_data = f.read()
-    return read_data
+def stories():
+    db.connect()
+    return st.update()
