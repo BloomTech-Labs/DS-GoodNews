@@ -55,7 +55,7 @@ def newspaperize(article_url):
     summary = article.summary
     description = article.meta_description
     id_number = hashlib.sha1(article_url.encode('utf-8')).hexdigest()
-    
+    clickbait = classify_clickbait(headline)
     # timestamp can be None
    
     # article_information = {"id" : id_number,
@@ -76,7 +76,7 @@ def newspaperize(article_url):
                   ("keywords" , keywords),
                   ("summary" , summary),
                   ("content" , content),
-                  ("clickbait" , 0),
+                  ("clickbait" , clickbait),
                   ("createtime" , str(datetime.datetime.now()))
     ])
 
@@ -88,7 +88,39 @@ def newspaperize(article_url):
         keyword_list.append( [article_information["id"], word])
     return article_information, article_list, keyword_list
 
+from sklearn.externals import joblib
+from scipy.sparse import hstack
+import pandas as pd
 
+def classify_clickbait(headline):
+    
+    def getPosTags(text):
+        posTags = nltk.pos_tag(nltk.word_tokenize(text))
+        justTags = []
+        for tags in posTags:
+            justTags.append(tags[1])
+        return justTags
+    
+    with open('../model/svm.pkl', 'rb') as f:
+        svm = joblib.load(f)
+    with open('../model/tfidf_vectorizer_pos.pkl', 'rb') as f:
+        tfidf_vectorizer_pos = joblib.load(f)
+    with open('../model/tfidf_vectorizer_text.pkl', 'rb') as f:
+        tfidf_vectorizer_text = joblib.load(f)
+    print('models loaded')
+    
+    print(svm.__dict__.items())
+    
+    headline_pos = getPosTags(headline)
+    headline_pos = ' '.join([str(tag) for tag in headline_pos])
+
+    data_tfidf_text = tfidf_vectorizer_text.transform([headline])
+    data_tfidf_pos = tfidf_vectorizer_pos.transform([headline_pos])
+
+    data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
+    data_tfidf = pd.DataFrame(data_tfidf)
+
+    return int(svm.predict(data_tfidf)[0])
 
 import jsonlines
 
@@ -133,7 +165,3 @@ def update_files():
             f.write(article_json)
 
     return json.dumps(new_article_jsons)
-
-
-
-
