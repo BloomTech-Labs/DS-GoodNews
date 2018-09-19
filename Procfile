@@ -1,1 +1,1 @@
-web: gunicorn goodnews.stories.goodnews:app
+web: gunicorn -b :$PORT goodnews.stories.goodnews:app
