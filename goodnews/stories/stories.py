@@ -1,6 +1,6 @@
 import feedparser
 from collections import OrderedDict
-import database as db
+from database import Database
 import json
 import datetime
 
@@ -119,8 +119,9 @@ def update_files():
     new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
 
     # write to database
-    conn = db.connect()
-    db.insert(conn, new_article_list,new_article_keywords_lists)
+    db = Database('goodnews.db')
+    db.connect()
+    db.insert(new_article_list,new_article_keywords_lists)
 
     with open('extracted_article_urls.txt', 'a') as f:
         for url in new_article_urls:
