@@ -188,12 +188,12 @@ def newspaperize_new_articles_from_feed(new_article_urls):
 
 def update_files():
     
-    with open('RSS_feeds.txt') as f:
-        list_of_RSS_feeds = f.readlines()
+    # with open('RSS_feeds.txt') as f:
+    #     list_of_RSS_feeds = f.readlines()
     with open('extracted_article_urls.txt') as f:
         extracted_article_urls = f.readlines()
 
-    updated_article_urls = update_feeds(list_of_RSS_feeds)
+    updated_article_urls = update_feeds('https://www.yahoo.com/news/rss')
 
     new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
