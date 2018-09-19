@@ -1,1 +1,1 @@
-web: gunicorn goodnews.py:app
+web: gunicorn goodnews:app
