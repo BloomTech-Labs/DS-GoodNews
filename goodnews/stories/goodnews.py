@@ -1,8 +1,6 @@
 from flask import Flask
 from flask import request
 import stories as st
-import database as db
-
 
 app = Flask(__name__)
 
@@ -12,5 +10,4 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
-    db.connect()
     return st.update()
