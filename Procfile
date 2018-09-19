@@ -1,1 +1,1 @@
-web: gunicorn goodnews:app
+web: gunicorn goodnews/stories/goodnews:app
