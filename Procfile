@@ -1,1 +1,1 @@
-web: gunicorn --chdir /DS-GoodNews/goodnews/stories goodnews:app
+web: gunicorn --pythonpath /DS-GoodNews/goodnews/stories goodnews:app
