@@ -1,1 +1,0 @@
-web: gunicorn --pythonpath /DS-GoodNews/goodnews/stories goodnews:app
