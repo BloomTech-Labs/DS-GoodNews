@@ -135,7 +135,7 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    return int(svm.predict(data_tfidf)[0])
+    return int(svm.predict(data_tfidf)[0:4])
 
 import jsonlines
 
