@@ -10,6 +10,7 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
+    st.update()
     return st.readall()
 
 if __name__ == '__main__':
