@@ -24,7 +24,7 @@ def update_feeds(list_of_RSS_feeds):
 from newspaper import Article
 import nltk
 import hashlib
-nltk.download('punkt')
+# nltk.download('punkt')
 
 def newspaperize(article_url):
     """Takes an article url and an id number. Returns a dictionary containing information scraped
