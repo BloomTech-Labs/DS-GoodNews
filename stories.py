@@ -49,7 +49,7 @@ def newspaperize(article_url):
     print("Downloading:", article_url)
 
     try:
-        with timeout(seconds=20):
+        with timeout(seconds=2):
             article.download()
     except:
         print("Failed to download url:", article_url)
