@@ -86,6 +86,7 @@ def newspaperize(article_url):
     keyword_list = []
     for word in keywords:
         keyword_list.append( [article_information["id"], word])
+    print('processed text')
     return article_information, article_list, keyword_list
 
 from sklearn.externals import joblib
@@ -135,6 +136,7 @@ def newspaperize_new_articles_from_feed(new_article_urls):
             new_article_jsons.append(article_json)
             new_article_list.append(article_list)
             new_article_keywords_lists += keyword_list
+    print('newspaperize new articles complete')
     return new_article_jsons, new_article_list, new_article_keywords_lists
 
 def update_files():
@@ -149,7 +151,7 @@ def update_files():
     new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
     new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
-
+    print('this runs right before the db writes')
     # write to database
     db = Database('goodnews.db')
     db.connect()
