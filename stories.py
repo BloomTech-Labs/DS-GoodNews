@@ -36,7 +36,7 @@ def newspaperize(article_url):
 
     try:
         article.download()
-    except ArticleException:
+    except:
         print("Failed to download url:", article_url)
         return None, None, None
 
@@ -46,7 +46,7 @@ def newspaperize(article_url):
         print("Failed to parse url:", article_url)
         return None, None, None
 
-
+    print('begin processing')
     headline = article.title
     timestamp = article.publish_date
     content = article.text
