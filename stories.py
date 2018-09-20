@@ -172,7 +172,7 @@ def update_files():
     db = Database('goodnews.db')
     db.connect()
     db.insert(new_article_list,new_article_keywords_lists)
-
+    print('this runs right after the db writes')
     with open('extracted_article_urls.txt', 'a') as f:
         for url in new_article_urls:
             f.write(url + '\n')
