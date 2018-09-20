@@ -1,1 +1,1 @@
-http://feeds.reuters.com/Reuters/domesticNews
+http://www.politico.com/rss/politicopicks.xml
