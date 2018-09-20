@@ -31,7 +31,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return list_of_article_urls
+    return [list_of_article_urls[0]]
 
 
 
