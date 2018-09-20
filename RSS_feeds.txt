@@ -1,1 +1,2 @@
 http://feeds.reuters.com/Reuters/domesticNews
+https://www.buzzfeed.com/index.xml
