@@ -38,14 +38,14 @@ def newspaperize(article_url):
         article.download()
     except:
         print("Failed to download url:", article_url)
-        continue
+        pass
         # return None, None, None
 
     try:
         article.parse()
     except:
         print("Failed to parse url:", article_url)
-        continue
+        pass
         # return None, None, None
 
     print('begin processing')
