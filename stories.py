@@ -168,6 +168,7 @@ def update_files():
 
     new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
     print('this runs right before the db writes')
+    print(new_article_urls, new_article_jsons, new_article_list, new_article_keywords_lists)
     # write to database
     db = Database('goodnews.db')
     db.connect()
