@@ -38,13 +38,15 @@ def newspaperize(article_url):
         article.download()
     except:
         print("Failed to download url:", article_url)
-        return None, None, None
+        pass
+        # return None, None, None
 
     try:
         article.parse()
     except:
         print("Failed to parse url:", article_url)
-        return None, None, None
+        pass
+        # return None, None, None
 
     print('begin processing')
     headline = article.title
@@ -86,7 +88,6 @@ def newspaperize(article_url):
     keyword_list = []
     for word in keywords:
         keyword_list.append( [article_information["id"], word])
-    print('processed text')
     return article_information, article_list, keyword_list
 
 from sklearn.externals import joblib
