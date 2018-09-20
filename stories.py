@@ -31,7 +31,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return [list_of_article_urls[0]]
+    return [list_of_article_urls[0:4]]
 
 
 
@@ -135,7 +135,7 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    return int(svm.predict(data_tfidf)[0:4])
+    return int(svm.predict(data_tfidf)[0])
 
 import jsonlines
 
