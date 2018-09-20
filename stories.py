@@ -50,7 +50,7 @@ def newspaperize(article_url):
 
     try:
         with timeout(seconds=20):
-        article.download()
+            article.download()
     except:
         print("Failed to download url:", article_url)
         pass
