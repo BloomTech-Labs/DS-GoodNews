@@ -130,8 +130,10 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     new_article_jsons = []
     new_article_list = []
     new_article_keywords_lists = []
+    print('before processing')
     for article_url in new_article_urls:
         article_json, article_list, keyword_list = newspaperize(article_url)
+        print('finished all processing')
         if article_json is not None:
             new_article_jsons.append(article_json)
             new_article_list.append(article_list)
