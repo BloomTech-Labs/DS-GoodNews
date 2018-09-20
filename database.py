@@ -44,5 +44,5 @@ class Database:
         self.conn.close()
 
     def read(self):
-       c = self.conn.execute("SELECT * FROM stories LIMIT 100")
+       c = self.conn.execute("SELECT * FROM stories")
        return c.fetchall()
