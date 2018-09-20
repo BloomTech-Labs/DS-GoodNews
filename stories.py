@@ -38,14 +38,14 @@ def newspaperize(article_url):
         article.download()
     except:
         print("Failed to download url:", article_url)
-        pass
+        continue
         # return None, None, None
 
     try:
         article.parse()
     except:
         print("Failed to parse url:", article_url)
-        pass
+        continue
         # return None, None, None
 
     print('begin processing')
@@ -170,3 +170,25 @@ def update_files():
             f.write(article_json)
 
     return json.dumps(new_article_jsons)
+
+def readall():
+    db = Database('goodnews.db')
+    db.connect()
+    stories = db.read()
+    list_dict_stories = []
+    for s in stories:
+        article_information = OrderedDict([
+                            ("id" , s[0]),
+                            ("name", s[1]),
+                            ("url" , s[2]),
+                            ("timestamp" , s[3]),
+                            ("description" , s[4]),
+                            ("keywords" , s[5].split(',')),
+                            ("summary" , s[6]),
+                            ("content" , s[7]),
+                            ("clickbait" , s[8]),
+                            ("createtime" , s[9])
+                            ])
+        list_dict_stories.append(article_information)
+
+    return json.dumps(list_dict_stories)

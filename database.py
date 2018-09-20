@@ -42,3 +42,7 @@ class Database:
         self.conn.executemany("INSERT INTO keywords VALUES (?, ?)", keywords)
         self.conn.commit()
         self.conn.close()
+
+    def read(self):
+       c = self.conn.execute("SELECT * FROM stories LIMIT 100")
+       return c.fetchall()
