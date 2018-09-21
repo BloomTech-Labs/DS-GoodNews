@@ -32,7 +32,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return random.choices(population=list_of_article_urls, k=10)
+    return random.choices(population=list_of_article_urls, k=5)
 
 
 
