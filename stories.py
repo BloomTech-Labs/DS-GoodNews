@@ -3,6 +3,7 @@ from collections import OrderedDict
 from database import Database
 import json
 import datetime
+import random
 
 import signal
 
@@ -31,7 +32,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return list_of_article_urls[0:10]
+    return random.choices(population=list_of_article_urls, k=10)
 
 
 
