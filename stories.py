@@ -3,6 +3,7 @@ from collections import OrderedDict
 from database import Database
 import json
 import datetime
+import random
 
 import signal
 
@@ -31,7 +32,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return list_of_article_urls[0:10]
+    return random.choices(population=list_of_article_urls, k=5)
 
 
 
@@ -63,6 +64,7 @@ def newspaperize(article_url):
 
     print('begin processing')
     headline = article.title
+    imageurl = article.top_image
     timestamp = article.publish_date
     content = article.text
     article.nlp()
@@ -85,6 +87,7 @@ def newspaperize(article_url):
     article_information = OrderedDict([
                   ("id" , id_number),
                   ("name", headline),
+                  ("imageurl", imageurl),
                   ("url" , article_url),
                   ("timestamp" , timestamp.isoformat() if timestamp is not None else ""),
                   ("description" , description),
@@ -97,7 +100,7 @@ def newspaperize(article_url):
 
 
     article_list = list(article_information.values())
-    article_list[5] = ','.join(keywords)
+    article_list[6] = ','.join(keywords)
     keyword_list = []
     for word in keywords:
         keyword_list.append( [article_information["id"], word])
@@ -197,14 +200,15 @@ def readall():
         article_information = OrderedDict([
                             ("id" , s[0]),
                             ("name", s[1]),
-                            ("url" , s[2]),
-                            ("timestamp" , s[3]),
-                            ("description" , s[4]),
-                            ("keywords" , s[5].split(',')),
-                            ("summary" , s[6]),
-                            ("content" , s[7]),
-                            ("clickbait" , s[8]),
-                            ("createtime" , s[9])
+                            ("imageurl", s[2]),
+                            ("url" , s[3]),
+                            ("timestamp" , s[4]),
+                            ("description" , s[5]),
+                            ("keywords" , s[6].split(',')),
+                            ("summary" , s[7]),
+                            ("content" , s[8]),
+                            ("clickbait" , s[9]),
+                            ("createtime" , s[10])
                             ])
         list_dict_stories.append(article_information)
 
