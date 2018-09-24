@@ -64,7 +64,7 @@ def newspaperize(article_url):
 
     print('begin processing')
     headline = article.title
-    top_image = article.top_image
+    imageurl = article.top_image
     timestamp = article.publish_date
     content = article.text
     article.nlp()
@@ -87,7 +87,7 @@ def newspaperize(article_url):
     article_information = OrderedDict([
                   ("id" , id_number),
                   ("name", headline),
-                  ("imageurl", top_image),
+                  ("imageurl", imageurl),
                   ("url" , article_url),
                   ("timestamp" , timestamp.isoformat() if timestamp is not None else ""),
                   ("description" , description),
@@ -200,7 +200,7 @@ def readall():
         article_information = OrderedDict([
                             ("id" , s[0]),
                             ("name", s[1]),
-                            ("image", s[2]),
+                            ("imageurl", s[2]),
                             ("url" , s[3]),
                             ("timestamp" , s[4]),
                             ("description" , s[5]),
