@@ -19,6 +19,7 @@ class Database:
             create table stories (
             id TEXT,
             name TEXT,
+            image_url TEXT,
             url TEXT,
             timestamp TEXT,
             description TEXT,
@@ -38,7 +39,7 @@ class Database:
             self.conn.commit()
 
     def insert(self,stories, keywords):
-        self.conn.executemany("INSERT INTO stories VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", stories)
+        self.conn.executemany("INSERT INTO stories VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?. ?)", stories)
         self.conn.executemany("INSERT INTO keywords VALUES (?, ?)", keywords)
         self.conn.commit()
         self.conn.close()

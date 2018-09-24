@@ -200,14 +200,15 @@ def readall():
         article_information = OrderedDict([
                             ("id" , s[0]),
                             ("name", s[1]),
-                            ("url" , s[2]),
-                            ("timestamp" , s[3]),
-                            ("description" , s[4]),
-                            ("keywords" , s[5].split(',')),
-                            ("summary" , s[6]),
-                            ("content" , s[7]),
-                            ("clickbait" , s[8]),
-                            ("createtime" , s[9])
+                            ("image", s[2]),
+                            ("url" , s[3]),
+                            ("timestamp" , s[4]),
+                            ("description" , s[5]),
+                            ("keywords" , s[6].split(',')),
+                            ("summary" , s[7]),
+                            ("content" , s[8]),
+                            ("clickbait" , s[9]),
+                            ("createtime" , s[10])
                             ])
         list_dict_stories.append(article_information)
 
