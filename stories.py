@@ -87,7 +87,7 @@ def newspaperize(article_url):
     article_information = OrderedDict([
                   ("id" , id_number),
                   ("name", headline),
-                  ("image", top_image),
+                  ("imageurl", top_image),
                   ("url" , article_url),
                   ("timestamp" , timestamp.isoformat() if timestamp is not None else ""),
                   ("description" , description),
@@ -100,7 +100,7 @@ def newspaperize(article_url):
 
 
     article_list = list(article_information.values())
-    article_list[5] = ','.join(keywords)
+    article_list[6] = ','.join(keywords)
     keyword_list = []
     for word in keywords:
         keyword_list.append( [article_information["id"], word])
