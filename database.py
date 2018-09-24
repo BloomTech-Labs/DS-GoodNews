@@ -19,7 +19,7 @@ class Database:
             create table stories (
             id TEXT,
             name TEXT,
-            image_url TEXT,
+            imageurl TEXT,
             url TEXT,
             timestamp TEXT,
             description TEXT,
