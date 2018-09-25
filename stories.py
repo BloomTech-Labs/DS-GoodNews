@@ -4,7 +4,7 @@ from database import Database
 import json
 import datetime
 import random
-
+import keras
 import signal
 
 class timeout:
@@ -108,6 +108,7 @@ def newspaperize(article_url):
 
 from sklearn.externals import joblib
 from scipy.sparse import hstack
+from keras.models import load_model
 import pandas as pd
 
 def classify_clickbait(headline):
@@ -121,13 +122,21 @@ def classify_clickbait(headline):
     
     with open('svm.pkl', 'rb') as f:
         svm = joblib.load(f)
+    with open('mnb.pkl', 'rb') as f:
+        mnb = joblib.load(f)
+    with open('lr.pkl', 'rb') as f:
+        lr = joblib.load(f)
+    with open('rf.pkl', 'rb') as f:
+        rf = joblib.load(f)
+    with open('neural_net.h5', 'rb') as f:
+        neural_net = load_model('neural_net.h5')
+
     with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
         tfidf_vectorizer_pos = joblib.load(f)
     with open('tfidf_vectorizer_text.pkl', 'rb') as f:
         tfidf_vectorizer_text = joblib.load(f)
-    print('models loaded')
     
-    print(svm.__dict__.items())
+    print('models loaded')
     
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
@@ -138,7 +147,16 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    return int(svm.predict(data_tfidf)[0])
+    y_pred = model.predict(data_tfidf)
+    y_pred = [0 if i < 0.5 else 1 for i in y_pred][0]
+
+    predictions = [int(svm.predict(data_tfidf)[0]),
+                   int(mnb.predict(data_tfidf)[0]),
+                   int(lr.predict(data_tfidf)[0]),
+                   int(rf.predict(data_tfidf)[0]),
+                   y_pred]
+
+    return max(set(predictions), key=predictions.count)
 
 import jsonlines
 
