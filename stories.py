@@ -121,13 +121,17 @@ def classify_clickbait(headline):
     
     with open('svm.pkl', 'rb') as f:
         svm = joblib.load(f)
+    with open('mnb.pkl', 'rb') as f:
+        mnb = joblib.load(f)
+    with open('lr.pkl', 'rb') as f:
+        lr = joblib.load(f)
+    with open('rf.pkl', 'rb') as f:
+        rf = joblib.load(f)
     with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
         tfidf_vectorizer_pos = joblib.load(f)
     with open('tfidf_vectorizer_text.pkl', 'rb') as f:
         tfidf_vectorizer_text = joblib.load(f)
     print('models loaded')
-    
-    print(svm.__dict__.items())
     
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
@@ -138,7 +142,11 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    return int(svm.predict(data_tfidf)[0])
+    predictions = [int(svm.predict(data_tfidf)[0]),
+                   int(mnb.predict(data_tfidf)[0]),
+                   int(lr.predict(data_tfidf)[0])]
+
+    return max(set(predictions), key=predictions.count)
 
 import jsonlines
 

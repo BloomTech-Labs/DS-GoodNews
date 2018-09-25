@@ -5,6 +5,11 @@ import numpy as np
 
 # sklearn models
 from sklearn.svm import LinearSVC
+from sklearn.ensemble import AdaBoostClassifier as ABC
+from sklearn.naive_bayes import MultinomialNB as MNB
+from sklearn.neural_network import MLPClassifier as MLPC
+from sklearn.linear_model import LogisticRegression as LR
+from sklearn.ensemble import RandomForestClassifier as RFC
 
 # other helpful sklearn imports 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -45,14 +50,25 @@ X_train = data_tfidf[:split].values
 X_test = data_tfidf[split:].values
 
 svm = LinearSVC()
+mnb = MNB()
+lr = LR()
 
-svm.fit(X_train, y_train)
-predictions = svm.predict(X_test)
+models = {'Linear Support Vector': svm,
+          'Multinomial Naive Bayes': mnb,
+          'Logistic Regression': lr}
 
-print('Support Vector Machine', accuracy_score(y_test, predictions))
+p = []
+for n, m in models.items():
+  m.fit(X_train, y_train)
+  predictions = m.predict(X_test)
+  p.append(predictions)
+  print('%s : %.3f' % (n, accuracy_score(y_test, predictions)))
+
 
 from sklearn.externals import joblib
 
 joblib.dump(svm, 'svm.pkl') 
+joblib.dump(mnb, 'mnb.pkl') 
+joblib.dump(lr, 'lr.pkl') 
 joblib.dump(tfidf_vectorizer_text, 'tfidf_vectorizer_text.pkl')
 joblib.dump(tfidf_vectorizer_pos, 'tfidf_vectorizer_pos.pkl')
