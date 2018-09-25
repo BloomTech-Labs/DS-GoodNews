@@ -147,14 +147,14 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    y_pred = model.predict(data_tfidf)
-    y_pred = [0 if i < 0.5 else 1 for i in y_pred][0]
+    nn_pred = model.predict(data_tfidf)
+    nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
 
     predictions = [int(svm.predict(data_tfidf)[0]),
                    int(mnb.predict(data_tfidf)[0]),
                    int(lr.predict(data_tfidf)[0]),
                    int(rf.predict(data_tfidf)[0]),
-                   y_pred]
+                   nn_pred]
 
     return max(set(predictions), key=predictions.count)
 
