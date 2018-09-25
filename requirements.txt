@@ -53,6 +53,7 @@ gevent==1.2.2
 glob2==0.5
 gmpy2==2.0.8
 greenlet==0.4.12
+gunicorn==19.9.0
 h5py==2.7.0
 heapdict==1.0.0
 html5lib==0.999999999
@@ -162,6 +163,7 @@ seaborn==0.8
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.11.0
+sklearn==0.0
 smart-open==1.6.0
 snowballstemmer==1.2.1
 sortedcollections==0.5.3
