@@ -129,7 +129,7 @@ def classify_clickbait(headline):
     with open('rf.pkl', 'rb') as f:
         rf = joblib.load(f)
     with open('neural_net.h5', 'rb') as f:
-        neural_net = load_model('neural_net.h5')
+        nn = load_model('neural_net.h5')
 
     with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
         tfidf_vectorizer_pos = joblib.load(f)
@@ -147,7 +147,7 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    nn_pred = model.predict(data_tfidf)
+    nn_pred = nn.predict(data_tfidf)
     nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
 
     predictions = [int(svm.predict(data_tfidf)[0]),
