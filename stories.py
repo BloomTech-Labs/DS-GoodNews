@@ -1,6 +1,8 @@
 import feedparser
 from collections import OrderedDict
 from database import Database
+from database import db_session
+from models import Story
 import json
 import datetime
 import random

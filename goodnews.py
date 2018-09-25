@@ -1,8 +1,12 @@
 from flask import Flask, request
-
+from database import db_session
 import stories as st
 
 app = Flask(__name__)
+
+@app.teardown_appcontext
+def shutdown_session(Exception=None):
+    db_session.remove()
 
 @app.route('/')
 def goodnews():
