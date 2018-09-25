@@ -52,10 +52,13 @@ X_test = data_tfidf[split:].values
 svm = LinearSVC()
 mnb = MNB()
 lr = LR()
+rf = RFC(n_estimators = 100)
+
 
 models = {'Linear Support Vector': svm,
           'Multinomial Naive Bayes': mnb,
-          'Logistic Regression': lr}
+          'Logistic Regression': lr,
+          'Random Forest': rf}
 
 p = []
 for n, m in models.items():
@@ -70,5 +73,6 @@ from sklearn.externals import joblib
 joblib.dump(svm, 'svm.pkl') 
 joblib.dump(mnb, 'mnb.pkl') 
 joblib.dump(lr, 'lr.pkl') 
+joblib.dump(rf, 'rf.pkl')
 joblib.dump(tfidf_vectorizer_text, 'tfidf_vectorizer_text.pkl')
 joblib.dump(tfidf_vectorizer_pos, 'tfidf_vectorizer_pos.pkl')
