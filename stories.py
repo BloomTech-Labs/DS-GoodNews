@@ -34,7 +34,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return random.choices(population=list_of_article_urls, k=5)
+    return random.sample(population=list_of_article_urls, k=5)
 
 
 
@@ -77,15 +77,6 @@ def newspaperize(article_url):
     clickbait = classify_clickbait(headline)
     # timestamp can be None
    
-    # article_information = {"id" : id_number,
-    #               "name": headline,
-    #               "url" : article_url,
-    #               "timestamp" : timestamp.isoformat() if timestamp is not None else "",
-    #               "description" : description,
-    #               "keywords" : keywords,
-    #               "summary" : summary,
-    #               "content" : content,
-    #               "clickbait" : None}
     article_information = OrderedDict([
                   ("id" , id_number),
                   ("name", headline),
@@ -100,13 +91,19 @@ def newspaperize(article_url):
                   ("createtime" , str(datetime.datetime.now()))
     ])
 
+    s = Story()
+    s.name = headline
+    s.imageurl = imageurl
+    s.url = article_url
+    s.timestamp = timestamp.isoformat() if timestamp is not None else ""
+    s.description = description
+    s.keywords = keywords
+    s.summary = summary
+    s.content = content
+    s.clickbait = clickbait
+    s.createtime = datetime.datetime.now()    
 
-    article_list = list(article_information.values())
-    article_list[6] = ','.join(keywords)
-    keyword_list = []
-    for word in keywords:
-        keyword_list.append( [article_information["id"], word])
-    return article_information, article_list, keyword_list
+    return s
 
 from sklearn.externals import joblib
 from scipy.sparse import hstack
@@ -149,7 +146,7 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    nn_pred = model.predict(data_tfidf)
+    nn_pred = nn.predict(data_tfidf)
     nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
 
     predictions = [int(svm.predict(data_tfidf)[0]),
@@ -168,6 +165,9 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     new_article_list = []
     new_article_keywords_lists = []
     print('before processing')
+
+    # TODO need to lookup the url to see if exist
+
     for article_url in new_article_urls:
         article_json, article_list, keyword_list = newspaperize(article_url)
         print('finished all processing')
@@ -182,32 +182,50 @@ def update_files():
     
     with open('RSS_feeds.txt') as f:
         list_of_RSS_feeds = f.readlines()
-    with open('extracted_article_urls.txt') as f:
-        extracted_article_urls = f.readlines()
+    # with open('extracted_article_urls.txt') as f:
+    #     extracted_article_urls = f.readlines()
 
     updated_article_urls = update_feeds(list_of_RSS_feeds)
 
-    new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
+    # new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
-    new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
-    print('this runs right before the db writes')
-    print('new_article_urls: ', new_article_urls)
-    print('new_article_jsons: ', new_article_jsons)
-    print('new_article_list: ', new_article_list)
-    print('new_article_keywords_lists: ', new_article_keywords_lists)
-    # write to database
-    db = Database('goodnews.db')
-    db.connect()
-    db.insert(new_article_list,new_article_keywords_lists)
-    print('this runs right after the db writes')
-    with open('extracted_article_urls.txt', 'a') as f:
-        for url in new_article_urls:
-            f.write(url + '\n')
+    new_article_jsons = []
 
-    # output to jsonlines
-    with jsonlines.open('articles.jsonl', mode = 'a') as f:
-        for article_json in new_article_jsons: 
-            f.write(article_json)
+    for url in updated_article_urls:
+        s = Story.query.filter(Story.url == url).first()
+        print(s)
+        if s is None:
+            story = newspaperize(url)
+            db_session.add(story)
+            db_session.commit()
+            new_article_jsons.append(story.__dict__)
+        
+
+
+    
+
+
+
+
+    # new_article_jsons, new_article_list, new_article_keywords_lists, s = newspaperize_new_articles_from_feed(new_article_urls)
+    # print('this runs right before the db writes')
+    # print('new_article_urls: ', new_article_urls)
+    # print('new_article_jsons: ', new_article_jsons)
+    # print('new_article_list: ', new_article_list)
+    # print('new_article_keywords_lists: ', new_article_keywords_lists)
+    # # write to database
+    # db = Database('goodnews.db')
+    # db.connect()
+    # db.insert(new_article_list,new_article_keywords_lists)
+    # print('this runs right after the db writes')
+    # with open('extracted_article_urls.txt', 'a') as f:
+    #     for url in new_article_urls:
+    #         f.write(url + '\n')
+
+    # # output to jsonlines
+    # with jsonlines.open('articles.jsonl', mode = 'a') as f:
+    #     for article_json in new_article_jsons: 
+    #         f.write(article_json)
 
     return json.dumps(new_article_jsons)
 
