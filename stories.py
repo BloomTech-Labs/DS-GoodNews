@@ -1,13 +1,43 @@
 import feedparser
 from collections import OrderedDict
 from database import Database
+<<<<<<< HEAD
 from database import db_session
 from models import Story
+=======
+>>>>>>> origin/jrjflei/makeModelGlobal
 import json
 import datetime
 import random
 import keras
 import signal
+<<<<<<< HEAD
+=======
+from flask import g
+from sklearn.externals import joblib
+from scipy.sparse import hstack
+from keras.models import load_model
+
+global svm, mnb, lr, rf, nn, tfidf_vectorizer_text, tfidf_vectorizer_pos
+
+with open('svm.pkl', 'rb') as f:
+    svm = joblib.load(f)
+with open('mnb.pkl', 'rb') as f:
+    mnb = joblib.load(f)
+with open('lr.pkl', 'rb') as f:
+    lr = joblib.load(f)
+with open('rf.pkl', 'rb') as f:
+    rf = joblib.load(f)
+with open('neural_net.h5', 'rb') as f:
+    nn = load_model('neural_net.h5')
+
+with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+    tfidf_vectorizer_pos = joblib.load(f)
+with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+    tfidf_vectorizer_text = joblib.load(f)
+
+print('models loaded')
+>>>>>>> origin/jrjflei/makeModelGlobal
 
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
@@ -22,6 +52,10 @@ class timeout:
         signal.alarm(0)
 
 def update():
+<<<<<<< HEAD
+=======
+    
+>>>>>>> origin/jrjflei/makeModelGlobal
     return update_files()
 
 def update_feeds(list_of_RSS_feeds):
@@ -34,7 +68,11 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
+<<<<<<< HEAD
     return random.sample(population=list_of_article_urls, k=5)
+=======
+    return random.choices(population=list_of_article_urls, k=5)
+>>>>>>> origin/jrjflei/makeModelGlobal
 
 
 
@@ -64,7 +102,10 @@ def newspaperize(article_url):
         print("Failed to parse url:", article_url)
         return None, None, None
 
+<<<<<<< HEAD
     print('begin processing')
+=======
+>>>>>>> origin/jrjflei/makeModelGlobal
     headline = article.title
     imageurl = article.top_image
     timestamp = article.publish_date
@@ -77,6 +118,18 @@ def newspaperize(article_url):
     clickbait = classify_clickbait(headline)
     # timestamp can be None
    
+<<<<<<< HEAD
+=======
+    # article_information = {"id" : id_number,
+    #               "name": headline,
+    #               "url" : article_url,
+    #               "timestamp" : timestamp.isoformat() if timestamp is not None else "",
+    #               "description" : description,
+    #               "keywords" : keywords,
+    #               "summary" : summary,
+    #               "content" : content,
+    #               "clickbait" : None}
+>>>>>>> origin/jrjflei/makeModelGlobal
     article_information = OrderedDict([
                   ("id" , id_number),
                   ("name", headline),
@@ -91,6 +144,7 @@ def newspaperize(article_url):
                   ("createtime" , str(datetime.datetime.now()))
     ])
 
+<<<<<<< HEAD
     s = Story()
     s.name = headline
     s.imageurl = imageurl
@@ -108,6 +162,17 @@ def newspaperize(article_url):
 from sklearn.externals import joblib
 from scipy.sparse import hstack
 from keras.models import load_model
+=======
+
+    article_list = list(article_information.values())
+    article_list[6] = ','.join(keywords)
+    keyword_list = []
+    for word in keywords:
+        keyword_list.append( [article_information["id"], word])
+    return article_information, article_list, keyword_list
+
+
+>>>>>>> origin/jrjflei/makeModelGlobal
 import pandas as pd
 
 def classify_clickbait(headline):
@@ -119,6 +184,7 @@ def classify_clickbait(headline):
             justTags.append(tags[1])
         return justTags
     
+<<<<<<< HEAD
     with open('svm.pkl', 'rb') as f:
         svm = joblib.load(f)
     with open('mnb.pkl', 'rb') as f:
@@ -136,6 +202,25 @@ def classify_clickbait(headline):
         tfidf_vectorizer_text = joblib.load(f)
     
     print('models loaded')
+=======
+    # with open('svm.pkl', 'rb') as f:
+    #     svm = joblib.load(f)
+    # with open('mnb.pkl', 'rb') as f:
+    #     mnb = joblib.load(f)
+    # with open('lr.pkl', 'rb') as f:
+    #     lr = joblib.load(f)
+    # with open('rf.pkl', 'rb') as f:
+    #     rf = joblib.load(f)
+    # with open('neural_net.h5', 'rb') as f:
+    #     nn = load_model('neural_net.h5')
+
+    # with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+    #     tfidf_vectorizer_pos = joblib.load(f)
+    # with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+    #     tfidf_vectorizer_text = joblib.load(f)
+    
+    # print('models loaded')
+>>>>>>> origin/jrjflei/makeModelGlobal
     
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
@@ -164,6 +249,7 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     new_article_jsons = []
     new_article_list = []
     new_article_keywords_lists = []
+<<<<<<< HEAD
     print('before processing')
 
     # TODO need to lookup the url to see if exist
@@ -171,6 +257,12 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     for article_url in new_article_urls:
         article_json, article_list, keyword_list = newspaperize(article_url)
         print('finished all processing')
+=======
+    print('begin downloading and processing')
+    for article_url in new_article_urls:
+        article_json, article_list, keyword_list = newspaperize(article_url)
+        print('finished all downloading and processing')
+>>>>>>> origin/jrjflei/makeModelGlobal
         if article_json is not None:
             new_article_jsons.append(article_json)
             new_article_list.append(article_list)
@@ -179,6 +271,7 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     return new_article_jsons, new_article_list, new_article_keywords_lists
 
 def update_files():
+<<<<<<< HEAD
     
     with open('RSS_feeds.txt') as f:
         list_of_RSS_feeds = f.readlines()
@@ -226,6 +319,33 @@ def update_files():
     # with jsonlines.open('articles.jsonl', mode = 'a') as f:
     #     for article_json in new_article_jsons: 
     #         f.write(article_json)
+=======
+
+    with open('RSS_feeds.txt') as f:
+        list_of_RSS_feeds = f.readlines()
+    with open('extracted_article_urls.txt') as f:
+        extracted_article_urls = f.readlines()
+
+    updated_article_urls = update_feeds(list_of_RSS_feeds)
+
+    new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
+
+    new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
+    print('before db writes')
+    # write to database
+    db = Database('goodnews.db')
+    db.connect()
+    db.insert(new_article_list,new_article_keywords_lists)
+    print('after db writes')
+    with open('extracted_article_urls.txt', 'a') as f:
+        for url in new_article_urls:
+            f.write(url + '\n')
+
+    # output to jsonlines
+    with jsonlines.open('articles.jsonl', mode = 'a') as f:
+        for article_json in new_article_jsons: 
+            f.write(article_json)
+>>>>>>> origin/jrjflei/makeModelGlobal
 
     return json.dumps(new_article_jsons)
 
