@@ -6,7 +6,7 @@ import datetime
 import random
 import keras
 import signal
-from goodnews import svm, mnb, lr, rf, nn, tfidf_vectorizer_pos, tfidf_vectorizer_text
+from flask import g
 
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
@@ -142,19 +142,19 @@ def classify_clickbait(headline):
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
 
-    data_tfidf_text = tfidf_vectorizer_text.transform([headline])
-    data_tfidf_pos = tfidf_vectorizer_pos.transform([headline_pos])
+    data_tfidf_text = g.tfidf_vectorizer_text.transform([headline])
+    data_tfidf_pos = g.tfidf_vectorizer_pos.transform([headline_pos])
 
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    nn_pred = nn.predict(data_tfidf)
+    nn_pred = g.nn.predict(data_tfidf)
     nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
 
-    predictions = [int(svm.predict(data_tfidf)[0]),
-                   int(mnb.predict(data_tfidf)[0]),
-                   int(lr.predict(data_tfidf)[0]),
-                   int(rf.predict(data_tfidf)[0]),
+    predictions = [int(g.svm.predict(data_tfidf)[0]),
+                   int(g.mnb.predict(data_tfidf)[0]),
+                   int(g.lr.predict(data_tfidf)[0]),
+                   int(g.rf.predict(data_tfidf)[0]),
                    nn_pred]
 
     return max(set(predictions), key=predictions.count)
