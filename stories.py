@@ -87,7 +87,6 @@ def newspaperize(article_url):
         print("Failed to parse url:", article_url)
         return None, None, None
 
-    print('begin processing')
     headline = article.title
     imageurl = article.top_image
     timestamp = article.publish_date
@@ -188,10 +187,10 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     new_article_jsons = []
     new_article_list = []
     new_article_keywords_lists = []
-    print('before processing')
+    print('begin downloading and processing')
     for article_url in new_article_urls:
         article_json, article_list, keyword_list = newspaperize(article_url)
-        print('finished all processing')
+        print('finished all downloading and processing')
         if article_json is not None:
             new_article_jsons.append(article_json)
             new_article_list.append(article_list)
@@ -211,16 +210,12 @@ def update_files():
     new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
     new_article_jsons, new_article_list, new_article_keywords_lists = newspaperize_new_articles_from_feed(new_article_urls)
-    print('this runs right before the db writes')
-    print('new_article_urls: ', new_article_urls)
-    print('new_article_jsons: ', new_article_jsons)
-    print('new_article_list: ', new_article_list)
-    print('new_article_keywords_lists: ', new_article_keywords_lists)
+    print('before db writes')
     # write to database
     db = Database('goodnews.db')
     db.connect()
     db.insert(new_article_list,new_article_keywords_lists)
-    print('this runs right after the db writes')
+    print('after db writes')
     with open('extracted_article_urls.txt', 'a') as f:
         for url in new_article_urls:
             f.write(url + '\n')
