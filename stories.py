@@ -10,7 +10,10 @@ import random
 import keras
 import signal
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
 from flask import g
 from sklearn.externals import joblib
 from scipy.sparse import hstack
@@ -50,9 +53,13 @@ class timeout:
 
 def update():
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+    
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
     return update_files()
 
 def update_feeds(list_of_RSS_feeds):
@@ -100,9 +107,12 @@ def newspaperize(article_url):
         return None, None, None
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     print('begin processing')
 =======
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
     headline = article.title
     imageurl = article.top_image
     timestamp = article.publish_date
@@ -142,7 +152,10 @@ from keras.models import load_model
     return article_information, article_list, keyword_list
 
 
+<<<<<<< HEAD
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
 import pandas as pd
 
 def classify_clickbait(headline):
@@ -154,6 +167,7 @@ def classify_clickbait(headline):
             justTags.append(tags[1])
         return justTags
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     with open('svm.pkl', 'rb') as f:
         svm = joblib.load(f)
@@ -191,6 +205,25 @@ def classify_clickbait(headline):
     
     # print('models loaded')
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+    # with open('svm.pkl', 'rb') as f:
+    #     svm = joblib.load(f)
+    # with open('mnb.pkl', 'rb') as f:
+    #     mnb = joblib.load(f)
+    # with open('lr.pkl', 'rb') as f:
+    #     lr = joblib.load(f)
+    # with open('rf.pkl', 'rb') as f:
+    #     rf = joblib.load(f)
+    # with open('neural_net.h5', 'rb') as f:
+    #     nn = load_model('neural_net.h5')
+
+    # with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+    #     tfidf_vectorizer_pos = joblib.load(f)
+    # with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+    #     tfidf_vectorizer_text = joblib.load(f)
+    
+    # print('models loaded')
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
     
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
@@ -220,6 +253,7 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     new_article_list = []
     new_article_keywords_lists = []
 <<<<<<< HEAD
+<<<<<<< HEAD
     print('before processing')
 
     # TODO need to lookup the url to see if exist
@@ -233,6 +267,12 @@ def newspaperize_new_articles_from_feed(new_article_urls):
         article_json, article_list, keyword_list = newspaperize(article_url)
         print('finished all downloading and processing')
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+    print('begin downloading and processing')
+    for article_url in new_article_urls:
+        article_json, article_list, keyword_list = newspaperize(article_url)
+        print('finished all downloading and processing')
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
         if article_json is not None:
             new_article_jsons.append(article_json)
             new_article_list.append(article_list)
@@ -242,7 +282,11 @@ def newspaperize_new_articles_from_feed(new_article_urls):
 
 def update_files():
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
     with open('RSS_feeds.txt') as f:
         list_of_RSS_feeds = f.readlines()
     # with open('extracted_article_urls.txt') as f:

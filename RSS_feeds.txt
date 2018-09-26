@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 http://www.politico.com/rss/politicopicks.xml
 =======
+=======
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
 http://rss.cnn.com/rss/cnn_us.rss 
 http://rss.nytimes.com/services/xml/rss/nyt/US.xml
 https://www.economist.com/sections/united-states/rss.xml
@@ -13,4 +16,7 @@ http://www.huffingtonpost.com/feeds/index.xml?x=1
 http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories
 http://www.politico.com/rss/politicopicks.xml
 https://www.yahoo.com/news/rss
+<<<<<<< HEAD
 >>>>>>> origin/jrjflei/makeModelGlobal
+=======
+>>>>>>> 002503f2fd1e2dec800763c0e1ad85032c8810ce
