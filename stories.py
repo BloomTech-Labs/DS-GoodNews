@@ -4,8 +4,6 @@ from database import Database
 <<<<<<< HEAD
 from database import db_session
 from models import Story
-=======
->>>>>>> origin/jrjflei/makeModelGlobal
 import json
 import datetime
 import random
@@ -37,7 +35,6 @@ with open('tfidf_vectorizer_text.pkl', 'rb') as f:
     tfidf_vectorizer_text = joblib.load(f)
 
 print('models loaded')
->>>>>>> origin/jrjflei/makeModelGlobal
 
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
@@ -118,33 +115,6 @@ def newspaperize(article_url):
     clickbait = classify_clickbait(headline)
     # timestamp can be None
    
-<<<<<<< HEAD
-=======
-    # article_information = {"id" : id_number,
-    #               "name": headline,
-    #               "url" : article_url,
-    #               "timestamp" : timestamp.isoformat() if timestamp is not None else "",
-    #               "description" : description,
-    #               "keywords" : keywords,
-    #               "summary" : summary,
-    #               "content" : content,
-    #               "clickbait" : None}
->>>>>>> origin/jrjflei/makeModelGlobal
-    article_information = OrderedDict([
-                  ("id" , id_number),
-                  ("name", headline),
-                  ("imageurl", imageurl),
-                  ("url" , article_url),
-                  ("timestamp" , timestamp.isoformat() if timestamp is not None else ""),
-                  ("description" , description),
-                  ("keywords" , keywords),
-                  ("summary" , summary),
-                  ("content" , content),
-                  ("clickbait" , clickbait),
-                  ("createtime" , str(datetime.datetime.now()))
-    ])
-
-<<<<<<< HEAD
     s = Story()
     s.name = headline
     s.imageurl = imageurl

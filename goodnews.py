@@ -6,19 +6,12 @@ from flask import Flask, request, g
 from sklearn.externals import joblib
 from keras.models import load_model
 
->>>>>>> origin/jrjflei/makeModelGlobal
 import stories as st
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
-@app.teardown_appcontext
-def shutdown_session(Exception=None):
-    db_session.remove()
-=======
 
 
->>>>>>> origin/jrjflei/makeModelGlobal
 
 @app.route('/')
 def goodnews():
@@ -26,8 +19,6 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
-<<<<<<< HEAD
-=======
 
     # with app.app_context():
     #     with open('svm.pkl', 'rb') as f:
@@ -46,7 +37,6 @@ def stories():
     #     with open('tfidf_vectorizer_text.pkl', 'rb') as f:
     #         g.tfidf_vectorizer_text = joblib.load(f)   
     #     print('models loaded')
->>>>>>> origin/jrjflei/makeModelGlobal
     return st.update()
 
 @app.route('/stories_2/')
@@ -56,8 +46,5 @@ def stories_2():
 if __name__ == '__main__':
     # port = int(os.environ.get('PORT', 5000))
     # app.run(host = '0.0.0.0', port = port)
-<<<<<<< HEAD
-=======
     # svm, mnb, lr, rf, nn, tfidf_vectorizer_pos, tfidf_vectorizer_text = init()
->>>>>>> origin/jrjflei/makeModelGlobal
     app.run()

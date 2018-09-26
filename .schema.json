@@ -1,0 +1,13 @@
+{
+	"name": "headline, title, etc",
+	"url" : "",
+	"timestamp" : "date of publication"
+	"image_url" : ""
+}
+
+{
+	"name": { "type: string"}
+	"url" : {"type: string"},
+	"timestamp" : {"type": "string", "format": "date-time"}
+	"image_url" : ""
+}
