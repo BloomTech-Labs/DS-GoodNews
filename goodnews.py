@@ -1,27 +1,12 @@
 from flask import Flask, request, g
+from sklearn.externals import joblib
+from keras.models import load_model
 
 import stories as st
 
 app = Flask(__name__)
 
 
-with app.app_context():
-    with open('svm.pkl', 'rb') as f:
-        g.svm = joblib.load(f)
-    with open('mnb.pkl', 'rb') as f:
-        g.mnb = joblib.load(f)
-    with open('lr.pkl', 'rb') as f:
-        g.lr = joblib.load(f)
-    with open('rf.pkl', 'rb') as f:
-        g.rf = joblib.load(f)
-    with open('neural_net.h5', 'rb') as f:
-        g.nn = load_model('neural_net.h5')
-
-    with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
-        g.tfidf_vectorizer_pos = joblib.load(f)
-    with open('tfidf_vectorizer_text.pkl', 'rb') as f:
-        g.tfidf_vectorizer_text = joblib.load(f)   
-    print('models loaded')
 
 
 @app.route('/')
@@ -30,6 +15,24 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
+
+    # with app.app_context():
+    #     with open('svm.pkl', 'rb') as f:
+    #         g.svm = joblib.load(f)
+    #     with open('mnb.pkl', 'rb') as f:
+    #         g.mnb = joblib.load(f)
+    #     with open('lr.pkl', 'rb') as f:
+    #         g.lr = joblib.load(f)
+    #     with open('rf.pkl', 'rb') as f:
+    #         g.rf = joblib.load(f)
+    #     with open('neural_net.h5', 'rb') as f:
+    #         g.nn = load_model('neural_net.h5')
+
+    #     with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+    #         g.tfidf_vectorizer_pos = joblib.load(f)
+    #     with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+    #         g.tfidf_vectorizer_text = joblib.load(f)   
+    #     print('models loaded')
     return st.update()
 
 @app.route('/stories_2/')
