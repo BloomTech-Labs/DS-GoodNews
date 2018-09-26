@@ -120,23 +120,23 @@ def classify_clickbait(headline):
             justTags.append(tags[1])
         return justTags
     
-    with open('svm.pkl', 'rb') as f:
-        svm = joblib.load(f)
-    with open('mnb.pkl', 'rb') as f:
-        mnb = joblib.load(f)
-    with open('lr.pkl', 'rb') as f:
-        lr = joblib.load(f)
-    with open('rf.pkl', 'rb') as f:
-        rf = joblib.load(f)
-    with open('neural_net.h5', 'rb') as f:
-        nn = load_model('neural_net.h5')
+    # with open('svm.pkl', 'rb') as f:
+    #     svm = joblib.load(f)
+    # with open('mnb.pkl', 'rb') as f:
+    #     mnb = joblib.load(f)
+    # with open('lr.pkl', 'rb') as f:
+    #     lr = joblib.load(f)
+    # with open('rf.pkl', 'rb') as f:
+    #     rf = joblib.load(f)
+    # with open('neural_net.h5', 'rb') as f:
+    #     nn = load_model('neural_net.h5')
 
-    with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
-        tfidf_vectorizer_pos = joblib.load(f)
-    with open('tfidf_vectorizer_text.pkl', 'rb') as f:
-        tfidf_vectorizer_text = joblib.load(f)
+    # with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+    #     tfidf_vectorizer_pos = joblib.load(f)
+    # with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+    #     tfidf_vectorizer_text = joblib.load(f)
     
-    print('models loaded')
+    # print('models loaded')
     
     headline_pos = getPosTags(headline)
     headline_pos = ' '.join([str(tag) for tag in headline_pos])
