@@ -1,0 +1,10 @@
+{
+	"id" : "<id>",
+	"name": "<headline>",
+	"url" : "<url>",
+	"timestamp" : "<date time of publication>",
+	"description" : "<description",
+	"keywords" : "<keywords>",
+	"summary" : "<summary>",
+	"content" : "<content>"
+}

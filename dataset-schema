@@ -1,0 +1,19 @@
+{
+	"id" : "<id>"
+	"name": "<headline>",
+	"url" : "<url of the article>",
+	"timestamp" : "date of publication",
+	"keywords" : ""
+	"summary" : ""
+	"source" : "clickbait challenger #17"
+	"external id" : ""
+
+	"aggregator_sites> : ["<sites of the news aggregator>"],
+
+	"content" : {
+		"targetParagraphs": ["<text of the ith paragraph in the target article>"],
+		"targetCaptions": ["<caption of the ith image in the target article>"]
+
+		
+	}
+}
