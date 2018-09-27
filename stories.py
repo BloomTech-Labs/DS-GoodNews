@@ -49,7 +49,7 @@ def update():
     
     return update_files()
 
-def update_feeds(list_of_RSS_feeds):
+def update_feeds(list_of_RSS_feeds, all=False):
     """ takes a list RSS feeds, a list containing article urls from the feeds, and a list containing
     the last update times of each feed. Returns an updated list of article urls and an updated list
     of last update times""" 
@@ -59,7 +59,7 @@ def update_feeds(list_of_RSS_feeds):
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
 
-    return random.sample(population=list_of_article_urls, k=5)
+    return random.sample(population=list_of_article_urls, k=5) if all is False else list_of_article_urls
 
 
 
@@ -77,8 +77,7 @@ def newspaperize(article_url):
     print("Downloading:", article_url)
 
     try:
-        with timeout(seconds=2):
-            article.download()
+        article.download()
     except:
         print("Failed to download url:", article_url)
         return None, None
@@ -206,14 +205,14 @@ def newspaperize_new_articles_from_feed(new_article_urls):
     print('newspaperize new articles complete')
     return new_article_jsons, new_article_list, new_article_keywords_lists
 
-def update_files():
+def update_files(all = False):
 
     with open('RSS_feeds.txt') as f:
         list_of_RSS_feeds = f.readlines()
     # with open('extracted_article_urls.txt') as f:
     #     extracted_article_urls = f.readlines()
 
-    updated_article_urls = update_feeds(list_of_RSS_feeds)
+    updated_article_urls = update_feeds(list_of_RSS_feeds, all)
 
     # new_article_urls = list(set(updated_article_urls).difference(extracted_article_urls))
 
@@ -232,6 +231,7 @@ def update_files():
     return json.dumps(new_article_jsons)
 
 def readall():
+
     db = Database('goodnews.db')
     db.connect()
     stories = db.read()

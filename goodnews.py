@@ -12,9 +12,6 @@ def goodnews():
 def stories():
     return st.update()
 
-@app.route('/stories_2/')
-def stories_2():
-    return st.readall()
 
 if __name__ == '__main__':
     # port = int(os.environ.get('PORT', 5000))

@@ -1,6 +1,20 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import mapper, relationship
 from database import Base 
+
+class Vote(Base):
+    __tablename__ = 'votes'
+    id = Column(Integer, primary_key=True)
+    story_id = Column(Integer, ForeignKey('stories.id'))
+    clickbait = Column(Boolean)
+    voter_id = Column(String)
+
+    def __init__(self, voter_id = None):
+        self.voter_id = voter_id
+
+    def __repr__(self):
+        return '<ClickBait>:%r' % (self.clickbait)
+
 
 class Keyword(Base):
     __tablename__ = 'keywords'
