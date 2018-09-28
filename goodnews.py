@@ -12,6 +12,11 @@ def goodnews():
 def stories():
     return st.update()
 
+@app.route('/stories/<int:story_id>', methods = ['POST'])
+def add_vote(story_id):
+    if request.method == 'POST':
+         st.AddVote(request)
+         return ''
 
 if __name__ == '__main__':
     # port = int(os.environ.get('PORT', 5000))

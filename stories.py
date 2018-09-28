@@ -253,3 +253,6 @@ def readall():
         list_dict_stories.append(article_information)
 
     return json.dumps(list_dict_stories)
+
+def AddVote(request):
+    print (request.json.keys())
