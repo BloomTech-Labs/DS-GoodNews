@@ -15,7 +15,7 @@ def stories():
 @app.route('/stories/<int:story_id>', methods = ['POST'])
 def add_vote(story_id):
     if request.method == 'POST':
-         st.AddVote(request)
+         st.AddVote(story_id, request)
          return ''
 
 if __name__ == '__main__':
