@@ -115,9 +115,11 @@ def newspaperize(article_url):
     s.url = article_url
     if timestamp is not None:
         s.timestamp = timestamp.isoformat()
+    else: # generate timestamp if none found
+        s.timestamp = datetime.datetime.now()
     # s.timestamp = timestamp.isoformat() if timestamp is not None else 
     s.description = description
-    s.keywords = list_of_keyword_obj#[Keyword('test')]
+    s.keywords = list_of_keyword_obj
     s.summary = summary
     s.content = content
     s.clickbait = clickbait
@@ -222,6 +224,7 @@ def update_files(all = False):
 
     for url in updated_article_urls:
         s = Story.query.filter(Story.url == url).first()
+        # TODO - check if timestamp changed
         print('URL Not Found in DB' if s is None else "URL Found in DB")
         if s is None:
             story, story_list = newspaperize(url)
@@ -303,5 +306,24 @@ def Get(story_id):
     # return json.dumps(story, cls=new_alchemy_encoder(False, ['Keyword', 'Vote']), default=DateTimeEncoder, check_circular=False)
 
 
+def GetByTimestamp(timestamp):
+    result = Story.query.filter(Story.timestamp > timestamp )
+    stories = []
+    for story in result:
+        article_information = OrderedDict([
+                ("id" , story.id),
+                ("name", story.name),
+                ("imageurl", story.imageurl),
+                ("url" , story.url),
+                ("timestamp" , story.timestamp.isoformat() if story.timestamp is not None else ""),
+                ("description" , story.description),
+                ("keywords" , [k.keyword for k in story.keywords]),
+                ("summary" , story.summary),
+                ("content" , story.content),
+                ("clickbait" , story.clickbait),
+                ("createtime" , story.createtime.isoformat() if story.createtime is not None else "")
+                ])
+        stories.append(article_information)
+    return json.dumps(stories)
 
 

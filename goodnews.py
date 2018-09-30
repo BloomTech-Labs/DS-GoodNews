@@ -10,7 +10,11 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
-    return st.update()
+    timestamp = request.args.get('timestamp')
+    if timestamp is not None:
+        return st.GetByTimestamp(timestamp)
+    else:
+        return st.update()
 
 @app.route('/stories/<int:story_id>', methods = ['POST', 'GET'])
 def add_vote(story_id):
