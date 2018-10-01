@@ -1,5 +1,6 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.schema import UniqueConstraint
 from database import Base 
 
 class Vote(Base):
@@ -8,7 +9,8 @@ class Vote(Base):
     story_id = Column(Integer, ForeignKey('stories.id'))
     clickbait = Column(Boolean)
     voter_id = Column(String)
-
+    __table_args__ = (UniqueConstraint('story_id', 'voter_id',name='_voter_story_uc'),
+                     )
     def __init__(self, voter_id = None):
         self.voter_id = voter_id
 
@@ -39,6 +41,7 @@ class Story(Base):
     timestamp = Column(DateTime)
     description = Column(String())
     keywords = relationship("Keyword")
+    votes = relationship("Vote")
     summary = Column(String())
     content = Column(String())
     clickbait = Column(Integer)

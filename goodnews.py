@@ -10,13 +10,20 @@ def goodnews():
 
 @app.route('/stories/')
 def stories():
-    return st.update()
+    timestamp = request.args.get('timestamp')
+    if timestamp is not None:
+        return st.GetByTimestamp(timestamp)
+    else:
+        return st.update()
 
-@app.route('/stories/<int:story_id>', methods = ['POST'])
+@app.route('/stories/<int:story_id>', methods = ['POST', 'GET'])
 def add_vote(story_id):
     if request.method == 'POST':
-         st.AddVote(story_id, request)
-         return ''
+        st.AddVote(story_id, request)
+        return ''
+    if request.method == 'GET':
+        return st.Get(story_id)
+
 
 if __name__ == '__main__':
     # port = int(os.environ.get('PORT', 5000))

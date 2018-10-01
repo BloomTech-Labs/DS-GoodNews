@@ -2,7 +2,7 @@ import feedparser
 from collections import OrderedDict
 from database import Database
 from database import db_session
-from models import Story, Keyword
+from models import Story, Keyword, Vote
 import json
 import datetime
 import random
@@ -12,6 +12,8 @@ from flask import g
 from sklearn.externals import joblib
 from scipy.sparse import hstack
 from keras.models import load_model
+
+
 
 global svm, mnb, lr, rf, nn, tfidf_vectorizer_text, tfidf_vectorizer_pos
 
@@ -96,7 +98,7 @@ def newspaperize(article_url):
     keywords = article.keywords
     summary = article.summary
     description = article.meta_description
-    id_number = hashlib.sha1(article_url.encode('utf-8')).hexdigest()
+    # id_number = hashlib.sha1(article_url.encode('utf-8')).hexdigest()
     clickbait = classify_clickbait(headline)
     # timestamp can be None
 
@@ -113,16 +115,18 @@ def newspaperize(article_url):
     s.url = article_url
     if timestamp is not None:
         s.timestamp = timestamp.isoformat()
+    else: # generate timestamp if none found
+        s.timestamp = datetime.datetime.now()
     # s.timestamp = timestamp.isoformat() if timestamp is not None else 
     s.description = description
-    s.keywords = list_of_keyword_obj#[Keyword('test')]
+    s.keywords = list_of_keyword_obj
     s.summary = summary
     s.content = content
     s.clickbait = clickbait
     s.createtime = datetime.datetime.now()
 
     article_information = OrderedDict([
-                    ("id" , id_number),
+                    ("id" , ''),
                     ("name", headline),
                     ("imageurl", imageurl),
                     ("url" , article_url),
@@ -220,12 +224,14 @@ def update_files(all = False):
 
     for url in updated_article_urls:
         s = Story.query.filter(Story.url == url).first()
+        # TODO - check if timestamp changed
         print('URL Not Found in DB' if s is None else "URL Found in DB")
         if s is None:
             story, story_list = newspaperize(url)
             if story is not None:
                 db_session.add(story)
                 db_session.commit()
+                story_list["id"] = story.id
                 new_article_jsons.append(story_list)
     
     return json.dumps(new_article_jsons)
@@ -255,4 +261,69 @@ def readall():
     return json.dumps(list_dict_stories)
 
 def AddVote(story_id, request):
-    print (request.json.keys())
+    data = request.json
+    print (data)
+    story = Story.query.get(story_id)
+    v = Vote()
+    v.clickbait = data["clickbait"]
+    v.voter_id = data["user_id"] 
+    story.votes.append(v)
+    db_session.add(story)
+    db_session.commit()
+    
+
+
+
+# from sqlalchemy import inspect
+
+# def object_as_dict(obj):
+#     return {c.key: getattr(obj, c.key)
+#             for c in inspect(obj).mapper.column_attrs}
+
+def Get(story_id):
+    story = Story.query.get(story_id)
+    # story_dict = object_as_dict(story)
+    # timestamp = story_dict["timestamp"]
+    # story_dict["timestamp"] = timestamp.isoformat() if timestamp is not None else ""
+    # createtime = story_dict["createtime"]
+    # story_dict["createtime"] = createtime.isoformat() if createtime is not None else ""
+
+    article_information = OrderedDict([
+                    ("id" , story.id),
+                    ("name", story.name),
+                    ("imageurl", story.imageurl),
+                    ("url" , story.url),
+                    ("timestamp" , story.timestamp.isoformat() if story.timestamp is not None else ""),
+                    ("description" , story.description),
+                    ("keywords" , [k.keyword for k in story.keywords]),
+                    ("summary" , story.summary),
+                    ("content" , story.content),
+                    ("clickbait" , story.clickbait),
+                    ("createtime" , story.createtime.isoformat() if story.createtime is not None else "")
+        ])
+
+    return json.dumps(article_information)
+    # return json.dumps(story, cls=new_alchemy_encoder(False, ['Keyword', 'Vote']), default=DateTimeEncoder, check_circular=False)
+
+
+def GetByTimestamp(timestamp):
+    result = Story.query.filter(Story.timestamp > timestamp )
+    stories = []
+    for story in result:
+        article_information = OrderedDict([
+                ("id" , story.id),
+                ("name", story.name),
+                ("imageurl", story.imageurl),
+                ("url" , story.url),
+                ("timestamp" , story.timestamp.isoformat() if story.timestamp is not None else ""),
+                ("description" , story.description),
+                ("keywords" , [k.keyword for k in story.keywords]),
+                ("summary" , story.summary),
+                ("content" , story.content),
+                ("clickbait" , story.clickbait),
+                ("createtime" , story.createtime.isoformat() if story.createtime is not None else "")
+                ])
+        stories.append(article_information)
+    return json.dumps(stories)
+
+
