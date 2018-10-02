@@ -3,6 +3,15 @@ from flask_cors import CORS
 
 import stories as st
 
+from rq import Queue
+from worker import conn
+
+q = Queue(connection=conn)
+
+def schedule_update():
+    q.enqueue(st.update_all)
+
+
 app = Flask(__name__)
 CORS(app)
 
