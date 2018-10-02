@@ -224,7 +224,7 @@ def update_files(all = False):
 
     for url in updated_article_urls:
         s = Story.query.filter(Story.url == url).first()
-        # TODO - check if timestamp changed
+        # NOTE: web app client need to handle if the article is updated
         print('URL Not Found in DB' if s is None else "URL Found in DB")
         if s is None:
             story, story_list = newspaperize(url)
@@ -234,7 +234,7 @@ def update_files(all = False):
                 story_list["id"] = story.id
                 new_article_jsons.append(story_list)
     
-    return json.dumps(new_article_jsons)
+    return json.dumps(new_article_jsons) if all is False else ""
 
 def readall():
 
@@ -327,3 +327,5 @@ def GetByTimestamp(timestamp):
     return json.dumps(stories)
 
 
+def update_all():
+    update_files(True)

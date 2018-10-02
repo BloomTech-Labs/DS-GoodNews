@@ -1,6 +1,15 @@
 from flask import Flask, request
-
 import stories as st
+# from stories import update
+
+from rq import Queue
+from worker import conn
+
+q = Queue(connection=conn)
+
+def schedule_update():
+    q.enqueue(st.update_all)
+
 
 app = Flask(__name__)
 
