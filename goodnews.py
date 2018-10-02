@@ -1,6 +1,7 @@
 from flask import Flask, request
+from flask_cors import CORS
+
 import stories as st
-# from stories import update
 
 from rq import Queue
 from worker import conn
