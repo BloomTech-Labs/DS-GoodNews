@@ -1,4 +1,4 @@
-from apscheduler.schedulers.blocking import BlockScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 from goodnews import schedule_update
 
 sched = BlockingScheduler()
