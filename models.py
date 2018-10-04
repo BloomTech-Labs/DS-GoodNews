@@ -54,3 +54,15 @@ class Story(Base):
     def __repr__(self):
         return '<Name>: %r' % (self.name)
 
+class Feed(Base):
+    __tablename__ = "feeds"
+
+    id = Column(Integer, primary_key = True)
+    name = Column(String(256))  
+    url = Column(String(1024))
+
+    def __init__(self, url=None):
+        self.url = url
+    
+    def __repr__(self):
+        return '<URL>: %r' % (self.url)
