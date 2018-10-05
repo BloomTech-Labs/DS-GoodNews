@@ -2,7 +2,7 @@ import feedparser
 from collections import OrderedDict
 from database import Database
 from database import db_session
-from models import Story, Keyword, Vote
+from models import Story, Keyword, Vote, Feed
 import json
 import datetime
 import random
@@ -113,17 +113,18 @@ def newspaperize(article_url):
     s.name = headline
     s.imageurl = imageurl
     s.url = article_url
+    current_time = datetime.datetime.now()
     if timestamp is not None:
         s.timestamp = timestamp.isoformat()
     else: # generate timestamp if none found
-        s.timestamp = datetime.datetime.now()
+        s.timestamp = current_time
     # s.timestamp = timestamp.isoformat() if timestamp is not None else 
     s.description = description
     s.keywords = list_of_keyword_obj
     s.summary = summary
     s.content = content
     s.clickbait = clickbait
-    s.createtime = datetime.datetime.now()
+    s.createtime = current_time
 
     article_information = OrderedDict([
                     ("id" , ''),
@@ -211,8 +212,11 @@ def newspaperize_new_articles_from_feed(new_article_urls):
 
 def update_files(all = False):
 
-    with open('RSS_feeds.txt') as f:
-        list_of_RSS_feeds = f.readlines()
+    # with open('RSS_feeds.txt') as f:
+    #     list_of_RSS_feeds = f.readlines()
+
+    feeds = Feed.query.all()
+    list_of_RSS_feeds = [ feed.url for feed in feeds]
     # with open('extracted_article_urls.txt') as f:
     #     extracted_article_urls = f.readlines()
 
