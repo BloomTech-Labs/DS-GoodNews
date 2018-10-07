@@ -8,6 +8,8 @@ from worker import conn
 
 q = Queue(connection=conn)
 
+q.enqueue(st.update_all)
+
 def schedule_update():
     q.enqueue(st.update_all)
 
