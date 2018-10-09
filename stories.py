@@ -2,12 +2,15 @@ import feedparser
 import json
 import random
 
-
 from database import Database, db_session
 from database_functions import dbAddVote, dbGet, dbGetByTimestamp
 from models import Story, Keyword, Vote, Feed
 from newspaper_extraction import newspaperize
+from classifier import classify_clickbait
 import classifier
+
+from sklearn.externals import joblib
+from keras.models import load_model
 
 def update_feeds(list_of_RSS_feeds, all=False, sample=5):
     """ takes a list RSS feeds, a list containing article urls from the feeds, and a list containing
@@ -38,16 +41,18 @@ def update_files(all=False, sample=5):
         if s is None:
             
             story = newspaperize(url)
-            new_articles.append(story)
-    
-    for article in new_articles:
-        article.clickbait= classifier.classify_clickbait(article.name)
+            
+            if story is not None:
+                new_articles.append(story)
+
+    for story_item in new_articles:
+        story_item.clickbait = classify_clickbait(story_item.name)
         
-    for article in new_articles:    
-        if article is not None:
-            db_session.add(article)
+    for story_item in new_articles:    
+        if story_item is not None:
+            db_session.add(story_item)
             db_session.commit()
-            new_article_jsons.append(story.to_dict())
+            new_article_jsons.append(story_item.to_dict())
     
     return json.dumps(new_article_jsons) if all is False else ""
 

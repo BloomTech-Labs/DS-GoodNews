@@ -2,6 +2,7 @@ from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Boo
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy.schema import UniqueConstraint
 from database import Base 
+from collections import OrderedDict
 
 class Vote(Base):
     __tablename__ = 'votes'
@@ -54,13 +55,13 @@ class Story(Base):
     def __repr__(self):
         return '<Name>: %r' % (self.name)
 
-    def to_dict():
+    def to_dict(self):
         article_dictionary = OrderedDict([
             ("id" , self.id),
             ("name", self.name),
             ("imageurl", self.imageurl),
             ("url" , self.url),
-            ("timestamp" , self.timestamp.isoformat() if story.timestamp is not None else ""),
+            ("timestamp" , self.timestamp.isoformat() if self.timestamp is not None else ""),
             ("description" , self.description),
             ("keywords" , [k.keyword for k in self.keywords]),
             ("summary" , self.summary),

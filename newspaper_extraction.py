@@ -1,11 +1,13 @@
 import datetime
 import nltk
 from newspaper import Article
+from stopwords import stopword
+from models import Keyword, Story
 
 
 def newspaperize(article_url):
-    """Takes an article url and an id number. Returns a dictionary containing information scraped
-    from the article"""
+    """Takes a string url that contains an article. Returns a Story object from 
+    models.py containing information scraped from the article located at the url."""
 
     article = Article(article_url)
 
@@ -15,13 +17,13 @@ def newspaperize(article_url):
         article.download()
     except:
         print("Failed to download url:", article_url)
-        return None, None
+        return None
 
     try:
         article.parse()
     except:
         print("Failed to parse url:", article_url)
-        return None, None
+        return None
 
     headline = article.title
     imageurl = article.top_image
@@ -35,9 +37,10 @@ def newspaperize(article_url):
 
     list_of_keyword_obj = []
     for word in keywords:
-        k = Keyword()
-        k.keyword = word
-        list_of_keyword_obj.append(k)
+        if word not in stopword:
+            k = Keyword()
+            k.keyword = word
+            list_of_keyword_obj.append(k)
 
     s = Story()
     s.name = headline
