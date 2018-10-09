@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_cors import CORS
 
 import stories as st
-
 from rq import Queue
 from worker import conn
 
@@ -27,7 +26,10 @@ def stories():
     if timestamp is not None:
         return st.GetByTimestamp(timestamp)
     else:
-        return st.update()
+        return 'Input timestamp please'
+    # else:
+
+    #     return st.GetByTimestampe(defaultTimestamp)
 
 @app.route('/stories/<int:story_id>', methods = ['POST', 'GET'])
 def add_vote(story_id):

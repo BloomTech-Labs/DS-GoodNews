@@ -18,13 +18,10 @@ def init_db():
     import models
     Base.metadata.create_all(bind=engine)
 
-
-
 class Database:
 
     def __init__(self, name):
         self.name = name
-
 
     def connect(self):
 

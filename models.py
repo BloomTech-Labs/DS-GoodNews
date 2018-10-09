@@ -54,6 +54,22 @@ class Story(Base):
     def __repr__(self):
         return '<Name>: %r' % (self.name)
 
+    def to_dict():
+        article_dictionary = OrderedDict([
+            ("id" , self.id),
+            ("name", self.name),
+            ("imageurl", self.imageurl),
+            ("url" , self.url),
+            ("timestamp" , self.timestamp.isoformat() if story.timestamp is not None else ""),
+            ("description" , self.description),
+            ("keywords" , [k.keyword for k in self.keywords]),
+            ("summary" , self.summary),
+            ("content" , self.content),
+            ("clickbait" , self.clickbait),
+            ("createtime" , self.createtime.isoformat() if self.createtime is not None else "")
+        ])
+        return article_dictionary
+
 class Feed(Base):
     __tablename__ = "feeds"
 
