@@ -12,6 +12,7 @@ from flask import g
 from sklearn.externals import joblib
 from scipy.sparse import hstack
 from keras.models import load_model
+import stopwords
 
 
 
@@ -104,6 +105,7 @@ def newspaperize(article_url):
 
     list_of_keyword_obj = []
     for word in keywords:
+        if word not in stopwords.stopword:
         k = Keyword()
         k.keyword = word
         list_of_keyword_obj.append(k)

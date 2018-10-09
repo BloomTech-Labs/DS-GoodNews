@@ -18,11 +18,9 @@ http://feeds.foxnews.com/foxnews/scitech
 http://abcnews.go.com/abcnews/topstories
 https://www.salon.com/feed
 http://www.marketwatch.com/rss/topstories
-https://nypost.com/feed
 http://feeds.wired.com/wired/index
 http://feeds.feedburner.com/Techcrunch
 http://fortune.com/feed
-http://feeds.harvardbusiness.org/harvardbusiness
 http://feeds.feedburner.com/AtlanticBusinessChannel
 http://www.cnet.com/rss/news
-http://www.dailymail.co.uk/articles.rss
+
