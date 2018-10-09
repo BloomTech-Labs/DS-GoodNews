@@ -10,15 +10,17 @@ from classifier import classify_clickbait
 import classifier
 
 def update_feeds(list_of_RSS_feeds, all=False, sample=5):
-    """ takes a list RSS feeds, a list containing article urls from the feeds, and a list containing
-    the last update times of each feed. Returns an updated list of article urls and an updated list
-    of last update times""" 
+    """Takes a list RSS feeds. Returns an updated list of recent article urls.
+    Keyword arguments:
+    all -- bool: True returns all urls
+    sample -- int: amount of article urls to return  
+    """ 
     list_of_article_urls = []
     for RSS_feed in list_of_RSS_feeds:
         feed = feedparser.parse(RSS_feed)
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
-            
+
     return random.sample(population=list_of_article_urls, k=sample) if all is False else list_of_article_urls
 
 def update_files(all=False, sample=5):
@@ -57,12 +59,15 @@ def update_files(all=False, sample=5):
 
 # database_functions
 def AddVote(story_id, request):
+    """Adds user's clickbait vote to story_id."""
     return dbAddVote(story_id, request)
 
 def Get(story_id):
+    """Get story information based on story_id"""
     return dbGet(story_id)
 
 def GetByTimestamp(timestamp):
+    """Get json of story information for every story after timestamp"""
     return dbGetByTimestamp(timestamp)
 
 
