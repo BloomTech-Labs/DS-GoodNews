@@ -9,9 +9,6 @@ from newspaper_extraction import newspaperize
 from classifier import classify_clickbait
 import classifier
 
-from sklearn.externals import joblib
-from keras.models import load_model
-
 def update_feeds(list_of_RSS_feeds, all=False, sample=5):
     """ takes a list RSS feeds, a list containing article urls from the feeds, and a list containing
     the last update times of each feed. Returns an updated list of article urls and an updated list
@@ -21,7 +18,7 @@ def update_feeds(list_of_RSS_feeds, all=False, sample=5):
         feed = feedparser.parse(RSS_feed)
         for item in feed["items"]:
             list_of_article_urls.append(item['id'])
-
+            
     return random.sample(population=list_of_article_urls, k=sample) if all is False else list_of_article_urls
 
 def update_files(all=False, sample=5):

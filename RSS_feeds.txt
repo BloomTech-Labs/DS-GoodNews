@@ -21,5 +21,6 @@ http://www.marketwatch.com/rss/topstories
 http://feeds.wired.com/wired/index
 http://feeds.feedburner.com/Techcrunch
 http://fortune.com/feed
+http://feeds.feedburner.com/AtlanticBusinessChannel
 http://www.cnet.com/rss/news
 
