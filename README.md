@@ -70,7 +70,3 @@ Although neural nets tell us little about important predictors in the data, or t
 
 ### Random Forest
 The random forest classifier was chosen due to the possibility that the key placement of only a few words in the headline, such as 'you' or 'believe', were linked to whether an article was clickbait or not. The random forest classifier achieves a similar accuracy as the other models, but is costly in terms of memory and time. 
-
-
-
-## Clustering Exploration
