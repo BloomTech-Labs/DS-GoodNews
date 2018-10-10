@@ -40,9 +40,6 @@ The evaluate clickbait feature will enable users to label articles as clickbait 
 ```
 Except id, all these fields can be extracted with the newspaper library given the url.
 
-## Analysis
-Analysis of the clickbait dataset
-
 ## Natural Language Processing
 
 ### Term Frequency Inverse Document Frequency
@@ -59,14 +56,13 @@ The classifiers used to determine whether an article is clickbait or not:
 The support vector machine can be used in classification tasks. It is effective in high-dimensional spaces, as is the case here with vectorized text. Despite the high-dimensionality of the space, however, it can still memory efficient.
 
 ### Multinomial Naive Bayes 
-The multimnomail naive bayes model is a a variant of naive bayes that is effective at classifying vectorized text.
+The multinomial naive bayes model is a a variant of naive bayes that is effective at classifying vectorized text.
 
 ### Logistic Regression
 Logistic regression was used because it is a generally robust model that can operate efficiently in a high-dimensional space.
 
 ### Neural Net
 Although neural nets tell us little about important predictors in the data, or their relationship to other points in the dataset, neural nets can be highly accurate at classifying text.  Here, we used a simple neural net to quickly reach above 95% accuracy.
-
 
 ### Random Forest
 The random forest classifier was chosen due to the possibility that the key placement of only a few words in the headline, such as 'you' or 'believe', were linked to whether an article was clickbait or not. The random forest classifier achieves a similar accuracy as the other models, but is costly in terms of memory and time. 
