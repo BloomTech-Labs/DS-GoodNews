@@ -4,7 +4,6 @@ from scipy.sparse import hstack
 import pandas as pd
 import nltk
 
-
 global svm, mnb, lr, rf, nn, tfidf_vectorizer_text, tfidf_vectorizer_pos
 
 with open('svm.pkl', 'rb') as f:
@@ -22,9 +21,6 @@ with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
     tfidf_vectorizer_pos = joblib.load(f)
 with open('tfidf_vectorizer_text.pkl', 'rb') as f:
     tfidf_vectorizer_text = joblib.load(f)
-
-print('models loaded')
-
 
 def classify_clickbait(headline):
     

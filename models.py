@@ -32,7 +32,6 @@ class Keyword(Base):
         return '%r' % (self.keyword)
 
 class Story(Base):
-
     __tablename__ = "stories"
 
     id = Column(Integer, primary_key = True)
