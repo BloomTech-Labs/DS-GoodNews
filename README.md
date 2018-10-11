@@ -77,7 +77,7 @@ The random forest classifier was chosen due to the possibility that the key plac
 
 ## Tech Stacks
 All the codes are written in Python.
-We use the Flask microframework as the backend to serve these articles/stories to other client applications via RESTful web services.
+We use the Flask microframework as the backend to serve these articles/stories to client applications via RESTful web services.
 We use SQLAlchemy on top of PostgreSQL for database.
 
 ## Web API
