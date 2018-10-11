@@ -53,7 +53,7 @@ In addition to using tf-idf to vectorize the text of the headline, the words in 
 The classifiers used to determine whether an article is clickbait or not:
 
 ### Support Vector Machine
-The support vector machine can be used in classification tasks. It is effective in high-dimensional spaces, as is the case here with vectorized text. Despite the high-dimensionality of the space, however, it can still memory efficient.
+The support vector machine can be used in classification tasks. It is effective in high-dimensional spaces, as is the case here with vectorized text. Despite the high-dimensionality of the space, however, it is still memory efficient.
 
 ### Multinomial Naive Bayes 
 The multinomial naive bayes model is a a variant of naive bayes that is effective at classifying vectorized text.
