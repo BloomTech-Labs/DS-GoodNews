@@ -32,14 +32,13 @@ class Keyword(Base):
         return '%r' % (self.keyword)
 
 class Story(Base):
-
     __tablename__ = "stories"
 
     id = Column(Integer, primary_key = True)
     name = Column(String(256))
     imageurl = Column(String(1024))
-    url = Column(String(1024))
-    timestamp = Column(DateTime)
+    url = Column(String(1024), index=True, unique=True)
+    timestamp = Column(DateTime, index=True)
     description = Column(String())
     keywords = relationship("Keyword")
     votes = relationship("Vote")

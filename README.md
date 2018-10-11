@@ -66,3 +66,20 @@ Although neural nets tell us little about important predictors in the data, or t
 
 ### Random Forest
 The random forest classifier was chosen due to the possibility that the key placement of only a few words in the headline, such as 'you' or 'believe', were linked to whether an article was clickbait or not. The random forest classifier achieves a similar accuracy as the other models, but is costly in terms of memory and time. 
+
+
+
+## Tech Stacks
+All the codes are written in Python.
+We use the Flask microframework as the backend to serve these articles/stories to client applications via RESTful web services.
+We use SQLAlchemy on top of PostgreSQL for database.
+
+## Web API
+Method GET /stories/?timestamp={timestamp}
+Get non-clickbait stories after the timestamp
+	
+Method GET /stories/{id}
+Get a particular story based on the story id
+
+Method POST /stories/{id}  BODY: {"user_id" : 1213, "clickbait" : true}
+Use to report clickbait or non-clickbait 
