@@ -80,6 +80,8 @@ All the codes are written in Python.
 We use the Flask microframework as the backend to serve these articles/stories to client applications via RESTful web services.
 We use SQLAlchemy on top of PostgreSQL for database.
 
+Natural language processing of the articles was done using newspaper, which is built on NLTK (Natural Language Toolkit). The headlines were vectorized with sci-kit learn's tfidf vectorizer and parts of speech were extracted with NLTK.
+
 ## Web API
 Method GET /stories/?timestamp={timestamp}
 Get non-clickbait stories after the timestamp
