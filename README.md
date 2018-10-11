@@ -74,3 +74,13 @@ The random forest classifier was chosen due to the possibility that the key plac
 
 
 ## Clustering Exploration
+
+## Web API
+Method GET /stories/?timestamp={timestamp}
+Get non-clickbait stories after the timestamp
+	
+Method GET /stories/{id}
+Get a particular story based on the story id
+
+Method POST /stories/{id}  BODY: {"user_id" : 1213, "clickbait" : true}
+Use to report clickbait or non-clickbait 
