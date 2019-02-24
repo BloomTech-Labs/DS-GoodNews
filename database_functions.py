@@ -27,7 +27,6 @@ def dbGetByTimestamp(timestamp):
     result = Story.query.filter(Story.timestamp > timestamp )
     stories = []
     for story in result:
-        print(story)
         article_dictionary = story.to_dict()
         stories.append(article_dictionary)
 
