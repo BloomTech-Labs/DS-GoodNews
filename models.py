@@ -22,7 +22,7 @@ class Vote(Base):
 class Keyword(Base):
     __tablename__ = 'keywords'
     id = Column(Integer, primary_key=True)
-    story_id = Column(Integer, ForeignKey('stories.id'))
+    story_id = Column(Integer, ForeignKey('stories.id'), index=True)
     keyword = Column(String)
 
     def __init__(self, word=None):
