@@ -21,7 +21,7 @@ import nltk
 from nltk import word_tokenize
 nltk.download('all')
 
-data = pd.read_csv('data.csv')
+data = pd.read_csv('data/data.csv')
 data.text = data.text.astype(str)
 
 def getPosTags(text):
@@ -70,9 +70,9 @@ for n, m in models.items():
 
 from sklearn.externals import joblib
 
-joblib.dump(svm, 'svm.pkl') 
-joblib.dump(mnb, 'mnb.pkl') 
-joblib.dump(lr, 'lr.pkl') 
-joblib.dump(rf, 'rf.pkl')
-joblib.dump(tfidf_vectorizer_text, 'tfidf_vectorizer_text.pkl')
-joblib.dump(tfidf_vectorizer_pos, 'tfidf_vectorizer_pos.pkl')
+joblib.dump(svm, 'pickles/svm.pkl') 
+joblib.dump(mnb, 'pickles/mnb.pkl') 
+joblib.dump(lr, 'pickles/lr.pkl') 
+joblib.dump(rf, 'pickles/rf.pkl')
+joblib.dump(tfidf_vectorizer_text, 'pickles/tfidf_vectorizer_text.pkl')
+joblib.dump(tfidf_vectorizer_pos, 'pickles/tfidf_vectorizer_pos.pkl')
