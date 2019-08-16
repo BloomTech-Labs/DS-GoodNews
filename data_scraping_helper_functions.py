@@ -74,8 +74,6 @@ def newspaperize_new_articles_from_feed(new_article_urls):
 
 def update_files():
     
-    with open('RSS_feeds.txt') as f:
-        list_of_RSS_feeds = f.readlines()
     with open('extracted_article_urls.txt') as f:
         extracted_article_urls = f.readlines()
 
@@ -89,6 +87,6 @@ def update_files():
         for url in new_article_urls:
             f.write(url + '\n')
     
-    with jsonlines.open('articles.jsonl', mode = 'a') as f:
+    with jsonlines.open('data/articles.jsonl', mode = 'a') as f:
         for article_json in new_article_jsons: 
             f.write(article_json)

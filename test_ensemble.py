@@ -19,7 +19,7 @@ from nltk import word_tokenize
 nltk.download('all')
 
 
-data = pd.read_csv('data.csv')
+data = pd.read_csv('data/data.csv')
 data.text = data.text.astype(str)
 
 def getPosTags(text):
@@ -47,19 +47,19 @@ y_test = data['isClickbait'][split:].values
 X_train = data_tfidf[:split].values
 X_test = data_tfidf[split:].values
 
-with open('svm.pkl', 'rb') as f:
+with open('pickles/svm.pkl', 'rb') as f:
     svm = joblib.load(f)
-with open('mnb.pkl', 'rb') as f:
+with open('pickles/mnb.pkl', 'rb') as f:
     mnb = joblib.load(f)
-with open('lr.pkl', 'rb') as f:
+with open('pickles/lr.pkl', 'rb') as f:
     lr = joblib.load(f)
-with open('rf.pkl', 'rb') as f:
+with open('pickles/rf.pkl', 'rb') as f:
     rf = joblib.load(f)
-with open('neural_net.h5', 'rb') as f:
+with open('pickles/neural_net.h5', 'rb') as f:
     nn = load_model('neural_net.h5')
-with open('tfidf_vectorizer_pos.pkl', 'rb') as f:
+with open('pickles/tfidf_vectorizer_pos.pkl', 'rb') as f:
     tfidf_vectorizer_pos = joblib.load(f)
-with open('tfidf_vectorizer_text.pkl', 'rb') as f:
+with open('pickles/tfidf_vectorizer_text.pkl', 'rb') as f:
     tfidf_vectorizer_text = joblib.load(f)
 
 models = {'Linear Support Vector': svm,
