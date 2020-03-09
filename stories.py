@@ -2,7 +2,7 @@ import feedparser
 import json
 import random
 
-from database import Database, db_session
+from database import db_session
 from database_functions import dbAddVote, dbGet, dbGetByTimestamp
 from models import Story, Keyword, Vote, Feed
 from newspaper_extraction import newspaperize

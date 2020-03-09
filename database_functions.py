@@ -1,4 +1,4 @@
-from database import Database, db_session
+from database import db_session
 from models import Story, Vote
 import json
 

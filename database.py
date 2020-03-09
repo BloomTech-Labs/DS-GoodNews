@@ -1,4 +1,4 @@
-import sqlite3
+# import sqlite3
 from urllib.request import pathname2url
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
