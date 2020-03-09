@@ -1,5 +1,5 @@
 import datetime # to get Story object creation time
-import nltk # necessary for NLP processing in newspaper
+# import nltk # necessary for NLP processing in newspaper
 from newspaper import Article # Article object stores extracted information from urls
 from stopwords import stopword # list of stopwords to remove from keywords
 from models import Keyword, Story # Keyword and Story objects to store keywords and story information
