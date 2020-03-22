@@ -22,7 +22,7 @@ def dbGet(story_id):
 
     return json.dumps(article_dictionary)
 
-def dbGetByTimestamp(timestamp):
+def dbGetByTimestamp(timestamp, return_json = True):
     """Get json of story information for every story after timestamp"""
     result = Story.query.filter(Story.timestamp > timestamp )
     stories = []
@@ -30,4 +30,4 @@ def dbGetByTimestamp(timestamp):
         article_dictionary = story.to_dict()
         stories.append(article_dictionary)
 
-    return json.dumps(stories)
+    return json.dumps(stories) if return_json else stories

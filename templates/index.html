@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Good News</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="jumbotron" style="color:black">
+
+    <h1 style="color:black">
+
+        Good News - Clickbait Free News Aggregator
+
+    </h1>
+    <h1>(minimal version while the site is being revamped)</h1>
+
+    <h2><a href="https://www.youtube.com/watch?v=FmaUG3_2fTA">Introduction Video of the Original Version</a></h2>
+
+</div>
+
+
+<div class="container">
+
+    {% for story in context %}
+
+    <img src="{{story['imageurl']}}" alt="">
+        <h3><a href="{{ story['url']}}">{{story['name']}} </a></h3>
+    <h4>{{story['description']}} </h4>
+    <p>{{ story['timestamp'].replace('T',' ') }}</p>
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+</html>

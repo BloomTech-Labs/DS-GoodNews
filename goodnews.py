@@ -1,9 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
 
 import stories as st
 from rq import Queue
 from worker import conn
+
+import datetime
 
 q = Queue(connection=conn)
 q.enqueue(st.update_all)
@@ -18,7 +20,20 @@ def schedule_update():
 @app.route('/')
 def goodnews():
     """Landing page"""
-    return 'Good News!'
+
+    now = datetime.datetime.utcnow()
+    query_time =  now - datetime.timedelta(hours=8)
+    timestamp = query_time.strftime('%Y-%m-%dT%H:%M:%S')
+    # pass in False to return list of dict
+    stories = st.GetByTimestamp(timestamp, False)
+
+    #
+    # desc = ["description"]
+    # news = ["headline"]
+    # img = [""]
+    #
+    # mylist = zip(news, desc, img)
+    return render_template('index.html', context = stories)
 
 @app.route('/stories/')
 def stories():
