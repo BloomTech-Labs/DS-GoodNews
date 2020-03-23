@@ -26,8 +26,8 @@
 
     {% for story in context %}
 
-    <img src="{{story['imageurl']}}" alt="">
-        <h3><a href="{{ story['url']}}">{{story['name']}} </a></h3>
+    <!-- <img src="{{story['imageurl']}}" alt=""> -->
+        <h3><a href="{{ story['url']}}">{{'(Clickbait!)' if story['clickbait'] is 1 else ''}}{{story['name']}} </a></h3>
     <h4>{{story['description']}} </h4>
     <p>{{ story['timestamp'].replace('T',' ') }}</p>
 

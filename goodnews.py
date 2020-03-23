@@ -22,7 +22,7 @@ def goodnews():
     """Landing page"""
 
     now = datetime.datetime.utcnow()
-    query_time =  now - datetime.timedelta(hours=8)
+    query_time =  now - datetime.timedelta(days=1)
     timestamp = query_time.strftime('%Y-%m-%dT%H:%M:%S')
     # pass in False to return list of dict
     stories = st.GetByTimestamp(timestamp, False)
