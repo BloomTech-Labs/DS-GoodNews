@@ -66,9 +66,9 @@ def Get(story_id):
     """Get story information based on story_id"""
     return dbGet(story_id)
 
-def GetByTimestamp(timestamp):
+def GetByTimestamp(timestamp, return_json = True):
     """Get json of story information for every story after timestamp"""
-    return dbGetByTimestamp(timestamp)
+    return dbGetByTimestamp(timestamp, return_json)
 
 
 
