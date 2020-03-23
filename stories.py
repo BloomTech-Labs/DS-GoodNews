@@ -6,8 +6,8 @@ from database import db_session
 from database_functions import dbAddVote, dbGet, dbGetByTimestamp
 from models import Story, Keyword, Vote, Feed
 from newspaper_extraction import newspaperize
-from classifier import classify_clickbait
-import classifier
+# from classifier import classify_clickbait
+# import classifier
 
 def update_feeds(list_of_RSS_feeds, all=False, sample=5):
     """Takes a list RSS feeds. Returns an updated list of recent article urls.
@@ -44,8 +44,8 @@ def update_files(all=False, sample=5):
             if story is not None:
                 new_articles.append(story)
 
-    for story_item in new_articles:
-        story_item.clickbait = classify_clickbait(story_item.name)
+    # for story_item in new_articles:
+    #     story_item.clickbait = classify_clickbait(story_item.name)
         
     for story_item in new_articles:    
         if story_item is not None:
