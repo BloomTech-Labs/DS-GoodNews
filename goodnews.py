@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 import stories as st
 # from rq import Queue
-from worker import conn
+# from worker import conn
 
 # q = Queue(connection=conn)
 # q.enqueue(st.update_all)
