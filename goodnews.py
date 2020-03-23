@@ -26,13 +26,7 @@ def goodnews():
     timestamp = query_time.strftime('%Y-%m-%dT%H:%M:%S')
     # pass in False to return list of dict
     stories = st.GetByTimestamp(timestamp, False)
-
-    #
-    # desc = ["description"]
-    # news = ["headline"]
-    # img = [""]
-    #
-    # mylist = zip(news, desc, img)
+    sorted(stories, key = lambda i : i['timestamp'], reverse=True)
     return render_template('index.html', context = stories)
 
 @app.route('/stories/')
