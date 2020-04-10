@@ -2,21 +2,24 @@ from flask import Flask, request, render_template
 from flask_cors import CORS
 
 import stories as st
-# from rq import Queue
-# from worker import conn
+from rq import Queue
+from worker import conn
 
 import datetime
 
-# q = Queue(connection=conn)
-# q.enqueue(st.update_all)
+q = Queue(connection=conn)
+q.enqueue(st.update_all)
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/updates')
 def schedule_update():
     """Calls update_all every five minutes"""
-    # q.enqueue(st.update_all)
+    q.enqueue(st.update_all)
+
+@app.route('/update')
+def update():
+    return st.update_all()
 
 @app.route('/')
 def goodnews():
