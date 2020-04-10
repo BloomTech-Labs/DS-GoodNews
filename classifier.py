@@ -1,5 +1,5 @@
 import joblib
-from keras.models import load_model
+#from keras.models import load_model
 from scipy.sparse import hstack
 import pandas as pd
 import nltk
@@ -25,7 +25,7 @@ with open(lr_pickle_path, 'rb') as f:
     lr = joblib.load(f)
 with open(rf_pickle_path, 'rb') as f:
     rf = joblib.load(f)
-nn = load_model(nn_pickle_path)
+#nn = load_model(nn_pickle_path)
 
 with open(pos_pickle_path, 'rb') as f:
     tfidf_vectorizer_pos = joblib.load(f)
@@ -50,13 +50,14 @@ def classify_clickbait(headline):
     data_tfidf = hstack([data_tfidf_pos, data_tfidf_text]).toarray()
     data_tfidf = pd.DataFrame(data_tfidf)
 
-    nn_pred = nn.predict(data_tfidf)
-    nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
+#    nn_pred = nn.predict(data_tfidf)
+#    nn_pred = [0 if i < 0.5 else 1 for i in nn_pred][0]
 
     predictions = [int(svm.predict(data_tfidf)[0]),
-                   int(mnb.predict(data_tfidf)[0]),
+#                   int(mnb.predict(data_tfidf)[0]),
                    int(lr.predict(data_tfidf)[0]),
-                   int(rf.predict(data_tfidf)[0]),
-                   nn_pred]
+                   int(rf.predict(data_tfidf)[0])
+		
+#                   nn_pred]
 
     return max(set(predictions), key=predictions.count)
