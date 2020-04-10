@@ -13,6 +13,7 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/updates')
 def schedule_update():
     """Calls update_all every five minutes"""
     # q.enqueue(st.update_all)
