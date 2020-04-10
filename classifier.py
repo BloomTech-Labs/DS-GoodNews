@@ -58,6 +58,7 @@ def classify_clickbait(headline):
                    int(lr.predict(data_tfidf)[0]),
                    int(rf.predict(data_tfidf)[0])
 		
-#                   nn_pred]
+#                   nn_pred
+                    ]
 
     return max(set(predictions), key=predictions.count)
