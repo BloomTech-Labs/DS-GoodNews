@@ -17,7 +17,7 @@ jsonlines==1.2.0
 Keras==2.2.4
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.0.5
-lxml==4.2.5
+lxml==4.6.5
 MarkupSafe==1.0
 newspaper3k==0.2.7
 nltk==3.3
